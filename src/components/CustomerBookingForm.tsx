@@ -433,15 +433,9 @@ export const CustomerBookingForm: React.FC<CustomerBookingFormProps> = ({
                 <span>Book Another Appointment</span>
               </button>
 
-              {onNavigateToAdmin && (
-                <button
-                  onClick={onNavigateToAdmin}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                >
-                  <span>Open Admin Dashboard to Review</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              )}
+              <p className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-right">
+                Our agency team will review your appointment and send confirmation to your WhatsApp shortly.
+              </p>
             </div>
           </div>
         ) : (

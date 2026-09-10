@@ -25,6 +25,7 @@ import { ContactSection } from './components/ContactSection.tsx';
 import { ClientPortal } from './components/ClientPortal.tsx';
 import { LiveChatWidget } from './components/LiveChatWidget.tsx';
 import { QRCodeModal } from './components/QRCodeModal.tsx';
+import { AdminLoginModal } from './components/AdminLoginModal.tsx';
 import { ToastContainer, ToastMessage } from './components/Toast.tsx';
 import { Footer } from './components/Footer.tsx';
 import {
@@ -72,10 +73,55 @@ export default function App() {
     );
   };
 
-  // 2. Navigation Active State
+  // 2. Navigation Active State & Admin Protection State
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('webnova_admin_auth') === 'true';
+    }
+    return false;
+  });
+  const [adminLoginModalOpen, setAdminLoginModalOpen] = useState<boolean>(false);
+
+  const handleAdminLoginSuccess = () => {
+    setIsAdminLoggedIn(true);
+    localStorage.setItem('webnova_admin_auth', 'true');
+    setActiveSection('admin-dashboard');
+    setTimeout(() => {
+      const elem = document.getElementById('admin-dashboard');
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 150);
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdminLoggedIn(false);
+    localStorage.removeItem('webnova_admin_auth');
+    if (activeSection === 'admin-dashboard') {
+      setActiveSection('hero');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    addToast('info', 'Admin Dashboard Locked', 'You have logged out. The administrative dashboard is now strictly hidden.');
+  };
+
+  const handleOpenAdmin = () => {
+    if (isAdminLoggedIn) {
+      setActiveSection('admin-dashboard');
+      const elem = document.getElementById('admin-dashboard');
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      setAdminLoginModalOpen(true);
+    }
+  };
 
   const handleNavigate = (sectionId: string) => {
+    if (sectionId === 'admin-dashboard') {
+      handleOpenAdmin();
+      return;
+    }
     const targetId = sectionId === 'booking' ? 'customer-booking' : sectionId;
     setActiveSection(targetId);
     const elem = document.getElementById(targetId);
@@ -258,7 +304,10 @@ export default function App() {
         onNavigate={handleNavigate}
         onOpenQR={() => setQrModalOpen(true)}
         onOpenBooking={() => handleNavigate('customer-booking')}
-        onOpenAdmin={() => handleNavigate('admin-dashboard')}
+        onOpenAdmin={handleOpenAdmin}
+        isAdminLoggedIn={isAdminLoggedIn}
+        onOpenAdminLogin={() => setAdminLoginModalOpen(true)}
+        onAdminLogout={handleAdminLogout}
         currentUser={currentUser}
         onOpenAuth={() => handleNavigate('portal')}
         notifications={notifications}
@@ -271,7 +320,8 @@ export default function App() {
       <main className="flex-grow">
         <Hero
           onOpenBooking={() => handleNavigate('customer-booking')}
-          onOpenAdmin={() => handleNavigate('admin-dashboard')}
+          onOpenAdmin={handleOpenAdmin}
+          isAdmin={isAdminLoggedIn}
           onNavigate={handleNavigate}
           onOpenQR={() => setQrModalOpen(true)}
         />
@@ -287,25 +337,43 @@ export default function App() {
               type: 'info',
               timestamp: 'Just now',
               read: false,
-              actionLabel: 'Open Admin Dashboard',
-              actionUrl: '#admin-dashboard',
+              actionLabel: isAdminLoggedIn ? 'Open Admin Dashboard' : undefined,
+              actionUrl: isAdminLoggedIn ? '#admin-dashboard' : undefined,
             };
             setNotifications((prev) => [newNotif, ...prev]);
           }}
-          onNavigateToAdmin={() => handleNavigate('admin-dashboard')}
           onShowToast={addToast}
         />
 
-        {/* 2. Separate Admin Dashboard for Confirming / Cancelling Bookings */}
-        <AdminDashboard
-          bookings={dbBookings}
-          onShowToast={addToast}
-          onRefresh={() => {
-            const latest = getLocalBookings();
-            setDbBookings(latest);
-            addToast('info', 'Database Synced', 'Refreshed latest bookings from database.');
-          }}
-        />
+        {/* 2. Admin Dashboard - STRICTLY PROTECTED & HIDDEN from clients, only rendered when logged in as Admin */}
+        {isAdminLoggedIn && (
+          <div className="relative border-y-2 border-blue-500/20">
+            <div className="bg-slate-900 text-white px-4 py-2.5 text-xs flex items-center justify-between font-semibold border-b border-blue-500/30">
+              <div className="flex items-center gap-2 text-blue-400">
+                <ShieldCheck className="w-4 h-4 text-blue-400" />
+                <span>AGENCY ADMIN SESSION ACTIVE</span>
+                <span className="hidden sm:inline text-slate-400 font-normal">| Protected Internal Dashboard</span>
+              </div>
+              <button
+                onClick={handleAdminLogout}
+                className="px-3 py-1 rounded-lg bg-rose-600/20 hover:bg-rose-600 border border-rose-500/40 text-rose-300 hover:text-white text-[11px] font-bold transition-all cursor-pointer"
+                title="Lock and hide Admin Dashboard"
+              >
+                Exit / Lock Admin Mode
+              </button>
+            </div>
+            <AdminDashboard
+              bookings={dbBookings}
+              onShowToast={addToast}
+              onRefresh={() => {
+                const latest = getLocalBookings();
+                setDbBookings(latest);
+                addToast('info', 'Database Synced', 'Refreshed latest bookings from database.');
+              }}
+              onLogout={handleAdminLogout}
+            />
+          </div>
+        )}
 
         <ServicesSection
           onSelectServiceForBooking={(serviceName) => {
@@ -338,6 +406,13 @@ export default function App() {
       <Footer
         onNavigate={handleNavigate}
         onOpenQR={() => setQrModalOpen(true)}
+        onOpenAdminLogin={() => {
+          if (isAdminLoggedIn) {
+            handleOpenAdmin();
+          } else {
+            setAdminLoginModalOpen(true);
+          }
+        }}
       />
 
       {/* Real-Time Live Customer Support Chat Widget */}
@@ -350,6 +425,14 @@ export default function App() {
       <QRCodeModal
         isOpen={qrModalOpen}
         onClose={() => setQrModalOpen(false)}
+      />
+
+      {/* Agency Administrative Access Modal (Passcode Protected) */}
+      <AdminLoginModal
+        isOpen={adminLoginModalOpen}
+        onClose={() => setAdminLoginModalOpen(false)}
+        onLoginSuccess={handleAdminLoginSuccess}
+        onShowToast={addToast}
       />
 
       {/* Non-Disruptive Toast Container */}

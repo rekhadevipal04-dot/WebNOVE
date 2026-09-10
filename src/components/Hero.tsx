@@ -20,6 +20,7 @@ import { COMPANY_INFO } from '../data/webnovaData.ts';
 interface HeroProps {
   onOpenBooking: () => void;
   onOpenAdmin?: () => void;
+  isAdmin?: boolean;
   onNavigate: (sectionId: string) => void;
   onOpenQR: () => void;
 }
@@ -27,6 +28,7 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({
   onOpenBooking,
   onOpenAdmin,
+  isAdmin = false,
   onNavigate,
   onOpenQR,
 }) => {
@@ -82,13 +84,13 @@ export const Hero: React.FC<HeroProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            {onOpenAdmin && (
+            {isAdmin && onOpenAdmin && (
               <button
                 onClick={onOpenAdmin}
-                className="px-5 py-3.5 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 active:scale-98 text-white text-sm font-bold shadow-lg shadow-slate-900/20 flex items-center gap-2 transition-all cursor-pointer"
+                className="px-5 py-3.5 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 active:scale-98 text-white text-sm font-bold shadow-lg shadow-slate-900/20 flex items-center gap-2 border border-blue-500/40 transition-all cursor-pointer"
               >
                 <ShieldCheck className="w-4 h-4 text-blue-400" />
-                <span>Admin Dashboard</span>
+                <span>Admin Dashboard (Active)</span>
               </button>
             )}
 

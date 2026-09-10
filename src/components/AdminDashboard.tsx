@@ -44,6 +44,7 @@ interface AdminDashboardProps {
   bookings: BookingRecord[];
   onShowToast: (type: 'success' | 'error' | 'info', title: string, message: string) => void;
   onRefresh?: () => void;
+  onLogout?: () => void;
 }
 
 const COMMON_REJECTION_REASONS = [
@@ -58,6 +59,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   bookings,
   onShowToast,
   onRefresh,
+  onLogout,
 }) => {
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'confirmed' | 'cancelled'>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -282,6 +284,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <Download className="w-3.5 h-3.5" />
               <span>Export CSV</span>
             </button>
+
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                className="px-3.5 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+                title="Lock and hide administrative dashboard"
+              >
+                <Lock className="w-3.5 h-3.5 text-rose-500" />
+                <span>Exit Admin Mode</span>
+              </button>
+            )}
           </div>
         </div>
 

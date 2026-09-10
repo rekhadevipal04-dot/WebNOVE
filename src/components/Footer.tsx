@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Code2,
   Heart,
+  Lock,
 } from 'lucide-react';
 import { WebnovaLogo } from './WebnovaLogo.tsx';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
@@ -16,9 +17,10 @@ import { COMPANY_INFO } from '../data/webnovaData.ts';
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
   onOpenQR: () => void;
+  onOpenAdminLogin?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenQR }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenQR, onOpenAdminLogin }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -218,11 +220,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenQR }) => {
         <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} WEBNOVA. All rights reserved. {COMPANY_INFO.legalName}</p>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5">
             <span className="flex items-center gap-1 text-slate-400">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span>AES-256 Vault Certified</span>
             </span>
+
+            {onOpenAdminLogin && (
+              <button
+                onClick={onOpenAdminLogin}
+                className="flex items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer text-xs"
+                title="Agency Management & Admin Login"
+              >
+                <Lock className="w-3 h-3 text-slate-500" />
+                <span>Agency Admin</span>
+              </button>
+            )}
 
             <button
               onClick={scrollToTop}
