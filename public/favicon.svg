@@ -1,0 +1,38 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="favWebnovaGrad" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#1E40AF" />
+      <stop offset="50%" stopColor="#2563EB" />
+      <stop offset="100%" stopColor="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="favRingGrad" x1="10" y1="80" x2="90" y2="20" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#2563EB" />
+      <stop offset="70%" stopColor="#38BDF8" />
+      <stop offset="100%" stopColor="#93C5FD" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="24" fill="#0F172A" />
+  <!-- Planetary Orbit Ring -->
+  <path
+    d="M 16 60 C 16 74, 50 82, 74 70 C 84 65, 90 54, 86 44 C 82 34, 70 26, 56 24"
+    stroke="url(#favRingGrad)"
+    stroke-width="4"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <!-- Stylized Sharp 'W' -->
+  <path
+    d="M 24 30 L 37 72 L 50 38 L 63 72 L 76 30"
+    stroke="url(#favWebnovaGrad)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <!-- Star Accent -->
+  <path
+    d="M 80 14 Q 80 22, 72 22 Q 80 22, 80 30 Q 80 22, 88 22 Q 80 22, 80 14 Z"
+    fill="#38BDF8"
+  />
+  <circle cx="80" cy="22" r="1.5" fill="#FFFFFF" />
+</svg>

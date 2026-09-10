@@ -1,0 +1,5 @@
+# Robots.txt for WEBNOVA Agency
+User-agent: *
+Allow: /
+
+Sitemap: /sitemap.xml

@@ -1,0 +1,6 @@
+{
+  "name": "WEBNOVA - Digital Marketing & Modern Web Agency",
+  "description": "Official platform for WEBNOVA featuring digital marketing services, client portfolio, customer appointment booking form with database persistence, and an administrative dashboard to review, accept, or reject incoming appointments with WhatsApp client notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

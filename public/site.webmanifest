@@ -1,0 +1,16 @@
+{
+  "name": "WEBNOVA - Digital Marketing & Modern Web Agency",
+  "short_name": "WEBNOVA",
+  "description": "Digital Marketing, SEO, Social Media Growth, and Custom Web Engineering Agency",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
