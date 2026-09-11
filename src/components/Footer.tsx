@@ -10,6 +10,8 @@ import {
   Code2,
   Heart,
   Lock,
+  Download,
+  Globe,
 } from 'lucide-react';
 import { WebnovaLogo } from './WebnovaLogo.tsx';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
@@ -236,6 +238,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenQR, onOpenAdmi
                 <span>Agency Admin</span>
               </button>
             )}
+
+            <a
+              href="/webnova-dist-netlify-drop.zip"
+              download="webnova-dist-netlify-drop.zip"
+              className="flex items-center gap-1 text-teal-400/80 hover:text-teal-300 transition-colors text-xs"
+              title="Download compiled Netlify Drop package (1-click upload)"
+            >
+              <Globe className="w-3 h-3" />
+              <span>Netlify Package</span>
+            </a>
 
             <button
               onClick={scrollToTop}

@@ -20,12 +20,12 @@ export const COMPANY_INFO = {
   website: 'www.webnova.in',
   address: 'MUMBAI, MAHARASHTRA 400103',
   fullAddress: 'MUMBAI, MAHARASHTRA 400103, INDIA',
-  adminEmail: 'rekhadevipal04@gmail.com',
-  adminEmailAlt: 'rekhadevipal04@gamil.com',
-  adminName: 'REKHA DEVI PAL',
+  adminEmail: 'webnova88@gmail.com',
+  adminEmailAlt: 'webnova88@gmail.com',
+  adminName: 'WEBNOVA OFFICIAL DESK',
   whatsappUrl: 'https://wa.me/919519832055?text=Hello%20WEBNOVA%20team,%20I%20am%20interested%20in%20your%20services.',
   telUrl: 'tel:+919519832055',
-  mailUrl: 'mailto:rekhadevipal04@gmail.com',
+  mailUrl: 'mailto:webnova88@gmail.com',
   leadership: [
     {
       name: 'REKHA DEVI PAL',

@@ -1,14 +1,14 @@
 /**
  * Admin Email Dispatch & Notification Service for WEBNOVA
- * Primary Super Administrator: Rekha Devi Pal (rekhadevipal04@gmail.com)
+ * Official Agency Email: webnova88@gmail.com
  */
 
 import { BookingRecord } from './bookingDb.ts';
 
-export const PRIMARY_ADMIN_EMAIL = 'rekhadevipal04@gmail.com';
-export const SECONDARY_ADMIN_EMAIL = 'rekhadevipal04@gamil.com';
-export const ADMIN_NAME = 'Rekha Devi Pal';
-export const ADMIN_ROLE = 'Super Administrator';
+export const PRIMARY_ADMIN_EMAIL = 'webnova88@gmail.com';
+export const SECONDARY_ADMIN_EMAIL = 'webnova88@gmail.com';
+export const ADMIN_NAME = 'WEBNOVA Official Admin';
+export const ADMIN_ROLE = 'Executive Agency Controller';
 
 /**
  * Builds formatted email contents for a single booking notification
@@ -158,6 +158,50 @@ Report Generated: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata
     subject,
     body,
   };
+}
+
+/**
+ * Generates direct booking email notification for webnova88@gmail.com
+ * with the subject: "New Appointment Booking - [Customer Name]"
+ */
+export function buildCustomerDirectBookingEmail(booking: BookingRecord): {
+  to: string;
+  subject: string;
+  body: string;
+} {
+  const subject = `New Appointment Booking - ${booking.customerName}`;
+  const body = [
+    `NEW APPOINTMENT BOOKING DETAILS`,
+    `========================================`,
+    `Customer Name: ${booking.customerName}`,
+    `Phone Number: ${booking.phoneNumber}`,
+    `Email Address: ${booking.email ? booking.email : 'Not provided'}`,
+    `Booking Date: ${booking.appointmentDate}`,
+    `Booking Time: ${booking.appointmentTime}`,
+    `Service / Type: ${booking.service}`,
+    `Additional Notes / Message: ${booking.notes ? booking.notes : 'None'}`,
+    `========================================`,
+    `Booking Reference ID: ${booking.id}`,
+    `Status: ${booking.status.toUpperCase()}`,
+    `Recipient: ${PRIMARY_ADMIN_EMAIL}`,
+    `Submitted At: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST`,
+  ].join('\n');
+
+  return {
+    to: PRIMARY_ADMIN_EMAIL,
+    subject,
+    body,
+  };
+}
+
+/**
+ * Directly launches user's default email composer with pre-filled booking details
+ * without opening any third-party website or external tabs.
+ */
+export function triggerDirectBookingMailto(booking: BookingRecord): void {
+  const email = buildCustomerDirectBookingEmail(booking);
+  const mailtoUrl = getMailtoUrl(email.to, email.subject, email.body);
+  window.location.href = mailtoUrl;
 }
 
 /**

@@ -26,6 +26,8 @@ import {
   Copy,
   Lock,
   UserCheck,
+  Globe,
+  UploadCloud,
 } from 'lucide-react';
 import { BookingRecord, updateBookingStatusInDb } from '../services/bookingDb.ts';
 import { getAdminUpdateWhatsAppUrl } from '../services/whatsappService.ts';
@@ -76,8 +78,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [acceptingBooking, setAcceptingBooking] = useState<BookingRecord | null>(null);
   const [notifyAcceptOnWhatsApp, setNotifyAcceptOnWhatsApp] = useState(true);
 
-  // Admin Email Dispatch & Identity State (Rekha Devi Pal - rekhadevipal04@gmail.com)
+  // Admin Email Dispatch & Identity State (Official Agency Desk - webnova88@gmail.com)
   const [showEmailReportModal, setShowEmailReportModal] = useState(false);
+  const [showNetlifyModal, setShowNetlifyModal] = useState(false);
   const [selectedEmailBooking, setSelectedEmailBooking] = useState<BookingRecord | null>(null);
   const [copiedDashboardReport, setCopiedDashboardReport] = useState(false);
   const [copiedSingleReport, setCopiedSingleReport] = useState(false);
@@ -271,10 +274,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <button
               onClick={() => setShowEmailReportModal(true)}
               className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
-              title="Send full appointment dashboard report to rekhadevipal04@gmail.com"
+              title="Send full appointment dashboard report to webnova88@gmail.com"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>Email Info to Admin</span>
+            </button>
+
+            <button
+              onClick={() => setShowNetlifyModal(true)}
+              className="px-3.5 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
+              title="Deploy & update live site on Netlify"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>Netlify Deploy</span>
             </button>
 
             <button
@@ -1145,7 +1157,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       )}
 
       {/* ========================================================= */}
-      {/* FULL DASHBOARD REPORT EMAIL MODAL (rekhadevipal04@gmail.com) */}
+      {/* FULL DASHBOARD REPORT EMAIL MODAL (webnova88@gmail.com) */}
       {/* ========================================================= */}
       {showEmailReportModal && (() => {
         const report = buildFullDashboardReportEmail(bookings);
@@ -1277,7 +1289,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       })()}
 
       {/* ========================================================= */}
-      {/* SINGLE BOOKING EMAIL DISPATCH MODAL (rekhadevipal04@gmail.com) */}
+      {/* SINGLE BOOKING EMAIL DISPATCH MODAL (webnova88@gmail.com) */}
       {/* ========================================================= */}
       {selectedEmailBooking && (() => {
         const emailData = buildSingleBookingEmail(selectedEmailBooking);
@@ -1399,6 +1411,123 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         );
       })()}
+
+      {/* Netlify Deployment Modal */}
+      {showNetlifyModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="flex items-start justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center shadow-md shadow-teal-500/20">
+                  <Globe className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white font-heading flex items-center gap-2">
+                    <span>Update Live Site on Netlify</span>
+                    <span className="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 text-[10px] font-bold">
+                      Ready to Deploy
+                    </span>
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Deploy your latest updates (Direct Email &amp; No-WhatsApp Flow) to Netlify in 10 seconds.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowNetlifyModal(false)}
+                className="p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Quick Option: Netlify Drop (Fastest) */}
+            <div className="p-4 rounded-xl bg-gradient-to-br from-teal-50 via-emerald-50/50 to-white dark:from-teal-950/30 dark:via-slate-900 dark:to-slate-900 border border-teal-200 dark:border-teal-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-teal-600 text-white text-[10px] font-bold flex items-center justify-center">
+                    1
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                    Instant Update via Netlify Drop (No Coding Needed)
+                  </h4>
+                </div>
+                <span className="text-[10px] font-bold text-teal-700 dark:text-teal-300 uppercase tracking-wide">
+                  Recommended
+                </span>
+              </div>
+
+              <ol className="text-xs text-slate-600 dark:text-slate-300 space-y-2 list-decimal list-inside pl-1">
+                <li>
+                  Neeche diye gaye button se <strong className="text-teal-700 dark:text-teal-300 font-mono">webnova-dist-netlify-drop.zip</strong> download karein.
+                </li>
+                <li>
+                  <strong>Netlify Drop</strong> (<a href="https://app.netlify.com/drop" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline font-semibold">app.netlify.com/drop</a>) open karein.
+                </li>
+                <li>
+                  Download ki hui ZIP file ko Netlify Drop box me drag &amp; drop kar dein. <strong>Site turant 100% live update ho jaayegi!</strong>
+                </li>
+              </ol>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                <a
+                  href="/webnova-dist-netlify-drop.zip"
+                  download="webnova-dist-netlify-drop.zip"
+                  className="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Netlify ZIP</span>
+                </a>
+
+                <a
+                  href="https://app.netlify.com/drop"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-teal-300 dark:border-teal-700 text-teal-900 dark:text-teal-200 text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  <span>Open Netlify Drop</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Option 2: Git Continuous Deployment Settings */}
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs space-y-1.5">
+              <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
+                <UploadCloud className="w-4 h-4 text-blue-500" />
+                <span>Agar aap GitHub / Git se connected hain:</span>
+              </div>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                Netlify settings me ye values pre-configured hain (<code className="font-mono text-blue-600 dark:text-blue-400 font-semibold">netlify.toml</code>):
+              </p>
+              <div className="grid grid-cols-2 gap-2 font-mono text-[11px] pt-1">
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-400 block text-[10px]">Build Command:</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">npm run build</span>
+                </div>
+                <div className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                  <span className="text-slate-400 block text-[10px]">Publish Directory:</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">dist</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Close Button */}
+            <div className="flex justify-end pt-2">
+              <button
+                type="button"
+                onClick={() => setShowNetlifyModal(false)}
+                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold transition-all cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
