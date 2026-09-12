@@ -28,9 +28,18 @@ import {
   UserCheck,
   Globe,
   UploadCloud,
+  Camera,
+  Upload,
 } from 'lucide-react';
 import { BookingRecord, updateBookingStatusInDb } from '../services/bookingDb.ts';
 import { getAdminUpdateWhatsAppUrl } from '../services/whatsappService.ts';
+import {
+  getFounderPhoto,
+  saveFounderPhoto,
+  resetFounderPhoto,
+  subscribeFounderPhoto,
+  DEFAULT_FOUNDER_INFO,
+} from '../services/founderPhoto.ts';
 import {
   PRIMARY_ADMIN_EMAIL,
   SECONDARY_ADMIN_EMAIL,
@@ -85,6 +94,52 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [copiedDashboardReport, setCopiedDashboardReport] = useState(false);
   const [copiedSingleReport, setCopiedSingleReport] = useState(false);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(true);
+
+  // Founder & CEO Portrait State
+  const [founderPhoto, setFounderPhoto] = useState<string>(() => getFounderPhoto());
+  const [isCustomFounderPhoto, setIsCustomFounderPhoto] = useState<boolean>(false);
+  const adminPhotoFileInputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    const saved = localStorage.getItem('webnova_founder_photo_url');
+    setIsCustomFounderPhoto(!!saved && saved !== DEFAULT_FOUNDER_INFO.defaultPhoto);
+
+    return subscribeFounderPhoto((newUrl) => {
+      setFounderPhoto(newUrl);
+      const custom = localStorage.getItem('webnova_founder_photo_url');
+      setIsCustomFounderPhoto(!!custom && custom !== DEFAULT_FOUNDER_INFO.defaultPhoto);
+    });
+  }, []);
+
+  const handleAdminPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      onShowToast('error', 'Invalid File Type', 'Please upload a valid image file (JPG, PNG, WebP).');
+      return;
+    }
+
+    if (file.size > 15 * 1024 * 1024) {
+      onShowToast('error', 'File Too Large', 'Please select an image smaller than 15MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        saveFounderPhoto(result);
+        onShowToast('success', 'CEO Photo Saved!', 'Anand Pal original photo has been applied across the whole website.');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleAdminResetPhoto = () => {
+    resetFounderPhoto();
+    onShowToast('info', 'CEO Photo Reset', 'Default Anand Pal executive portrait restored.');
+  };
 
   const handleCopyDashboardReport = () => {
     const report = buildFullDashboardReportEmail(bookings);
@@ -350,6 +405,75 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <Mail className="w-3.5 h-3.5" />
               <span>Email Full Dashboard Info to Admin</span>
             </button>
+          </div>
+        </div>
+
+        {/* Founder & CEO Executive Identity & Photo Management Card */}
+        <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 text-white border border-slate-800 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-slate-950 border-2 border-blue-500/60 shadow-md flex-shrink-0">
+              <img
+                src={founderPhoto}
+                alt="Anand Pal - Founder & CEO"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+              <span className="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border border-slate-900" />
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm font-extrabold text-white tracking-wide">ANAND PAL</span>
+                <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-[10px] font-bold uppercase tracking-wider">
+                  FOUNDER &amp; CEO
+                </span>
+                <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Public Spotlight Active</span>
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Executive leadership portrait displayed on Hero banner, Founder section, and Blog insights.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <input
+              type="file"
+              ref={adminPhotoFileInputRef}
+              onChange={handleAdminPhotoUpload}
+              accept="image/*"
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => adminPhotoFileInputRef.current?.click()}
+              className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
+              title="Upload Anand Pal photo (WhatsApp image or portrait)"
+            >
+              <Camera className="w-3.5 h-3.5" />
+              <span>{isCustomFounderPhoto ? 'Change CEO Photo' : 'Upload CEO Photo'}</span>
+            </button>
+
+            {isCustomFounderPhoto && (
+              <button
+                type="button"
+                onClick={handleAdminResetPhoto}
+                className="px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition-colors cursor-pointer"
+                title="Reset to default portrait"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            <a
+              href="#founder-spotlight"
+              className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 flex items-center gap-1 transition-colors"
+            >
+              <span>View Live</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </div>
         </div>
 

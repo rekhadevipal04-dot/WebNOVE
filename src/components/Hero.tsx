@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Calendar,
   MessageCircle,
@@ -16,6 +16,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
+import { getFounderPhoto, subscribeFounderPhoto } from '../services/founderPhoto.ts';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -32,6 +33,14 @@ export const Hero: React.FC<HeroProps> = ({
   onNavigate,
   onOpenQR,
 }) => {
+  const [founderPhoto, setFounderPhoto] = useState<string>(() => getFounderPhoto());
+
+  useEffect(() => {
+    return subscribeFounderPhoto((newPhoto) => {
+      setFounderPhoto(newPhoto);
+    });
+  }, []);
+
   return (
     <section id="hero" className="relative pt-6 pb-16 md:pt-12 md:pb-24 overflow-hidden">
       {/* Subtle Background Glow Elements */}
@@ -141,15 +150,29 @@ export const Hero: React.FC<HeroProps> = ({
                     Leadership &amp; Direction
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <div className="w-8 h-8 rounded-lg bg-blue-600/30 border border-blue-400/40 flex items-center justify-center font-bold text-xs text-blue-300">
-                        AP
+                    <button
+                      type="button"
+                      onClick={() => onNavigate('founder-spotlight')}
+                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-400/40 text-left transition-all group cursor-pointer"
+                      title="View Anand Pal Founder & CEO Profile"
+                    >
+                      <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-slate-900 border border-blue-400/50 flex-shrink-0 shadow-md">
+                        <img
+                          src={founderPhoto}
+                          alt="Anand Pal - Founder & CEO"
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                        />
+                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-900" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white tracking-wide">ANAND PAL</h4>
+                        <h4 className="text-xs font-bold text-white tracking-wide flex items-center gap-1 group-hover:text-blue-300 transition-colors">
+                          <span>ANAND PAL</span>
+                          <span className="text-[10px] text-blue-400">↗</span>
+                        </h4>
                         <p className="text-[10px] font-semibold text-blue-400 uppercase">FOUNDER &amp; CEO</p>
                       </div>
-                    </div>
+                    </button>
 
                     <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 border border-white/10">
                       <div className="w-8 h-8 rounded-lg bg-sky-600/30 border border-sky-400/40 flex items-center justify-center font-bold text-xs text-sky-300">

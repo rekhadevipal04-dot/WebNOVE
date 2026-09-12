@@ -19,6 +19,7 @@ import { Hero } from './components/Hero.tsx';
 import { CustomerBookingForm } from './components/CustomerBookingForm.tsx';
 import { AdminDashboard } from './components/AdminDashboard.tsx';
 import { ServicesSection } from './components/ServicesSection.tsx';
+import { FounderSection } from './components/FounderSection.tsx';
 import { PortfolioSection } from './components/PortfolioSection.tsx';
 import { BlogSection } from './components/BlogSection.tsx';
 import { ContactSection } from './components/ContactSection.tsx';
@@ -379,6 +380,11 @@ export default function App() {
           onSelectServiceForBooking={(serviceName) => {
             handleNavigate('customer-booking');
           }}
+        />
+
+        <FounderSection
+          onOpenBooking={() => handleNavigate('customer-booking')}
+          onShowToast={addToast}
         />
 
         <PortfolioSection

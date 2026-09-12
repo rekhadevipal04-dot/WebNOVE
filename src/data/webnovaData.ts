@@ -349,7 +349,7 @@ At **WEBNOVA**, our engineers craft lean, serverless-ready architectures utilizi
     author: {
       name: 'Anand Pal',
       role: 'Founder & CEO',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+      avatar: '/anand-pal-default.jpg',
     },
     publishedAt: 'Sep 4, 2026',
     readTime: '4 min read',
@@ -438,7 +438,7 @@ For retail outlets, clinics, luxury real estate, and professional consultancies 
     author: {
       name: 'Anand Pal',
       role: 'Founder & CEO',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+      avatar: '/anand-pal-default.jpg',
     },
     publishedAt: 'Jul 29, 2026',
     readTime: '4 min read',
