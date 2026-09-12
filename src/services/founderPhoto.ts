@@ -3,6 +3,8 @@
  * Manages photo persistence (localStorage with fallback) and real-time updates.
  */
 
+import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
+
 export const DEFAULT_FOUNDER_INFO = {
   name: 'Anand Pal',
   role: 'Founder & CEO',
@@ -13,7 +15,7 @@ export const DEFAULT_FOUNDER_INFO = {
   bio: 'Strategic tech entrepreneur leading digital growth architectures, custom web engineering, and enterprise client transformation at WEBNOVA.',
   quote:
     'At WEBNOVA, our mission is to engineer high-converting, lightning-fast digital solutions that turn ambitious businesses into undisputed market leaders.',
-  defaultPhoto: '/anand-pal-default.jpg',
+  defaultPhoto: ANAND_PAL_PHOTO_DATA_URL,
 };
 
 const STORAGE_KEY = 'webnova_founder_photo_url';
@@ -22,7 +24,8 @@ const UPDATE_EVENT = 'webnova_founder_photo_updated';
 export function getFounderPhoto(): string {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return saved;
+    // If saved is a valid base64 data URL, use it
+    if (saved && saved.startsWith('data:image/')) return saved;
   }
   return DEFAULT_FOUNDER_INFO.defaultPhoto;
 }

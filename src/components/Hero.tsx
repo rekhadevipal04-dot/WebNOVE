@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
 import { getFounderPhoto, subscribeFounderPhoto } from '../services/founderPhoto.ts';
+import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -158,9 +159,12 @@ export const Hero: React.FC<HeroProps> = ({
                     >
                       <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-slate-900 border border-blue-400/50 flex-shrink-0 shadow-md">
                         <img
-                          src={founderPhoto}
+                          src={founderPhoto || ANAND_PAL_PHOTO_DATA_URL}
                           alt="Anand Pal - Founder & CEO"
                           referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = ANAND_PAL_PHOTO_DATA_URL;
+                          }}
                           className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
                         />
                         <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-900" />

@@ -17,6 +17,7 @@ import {
   getFounderPhoto,
   subscribeFounderPhoto,
 } from '../services/founderPhoto.ts';
+import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
 
 interface FounderSectionProps {
   onOpenBooking: () => void;
@@ -78,9 +79,12 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                 {/* Main Photo Container - Clean Executive Frame */}
                 <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-950 border-2 border-slate-700/80 shadow-2xl aspect-[4/5] flex items-center justify-center">
                   <img
-                    src={photoUrl}
+                    src={photoUrl || ANAND_PAL_PHOTO_DATA_URL}
                     alt="Anand Pal - Founder & CEO of WEBNOVA"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = ANAND_PAL_PHOTO_DATA_URL;
+                    }}
                     className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105"
                   />
 

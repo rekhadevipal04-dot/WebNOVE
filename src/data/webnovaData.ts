@@ -7,6 +7,7 @@ import {
   AppNotification,
   AnalyticsData,
 } from '../types/index.ts';
+import { ANAND_PAL_PHOTO_DATA_URL } from './anandPalPhoto.ts';
 
 export const COMPANY_INFO = {
   name: 'WEBNOVA',
@@ -349,7 +350,7 @@ At **WEBNOVA**, our engineers craft lean, serverless-ready architectures utilizi
     author: {
       name: 'Anand Pal',
       role: 'Founder & CEO',
-      avatar: '/anand-pal-default.jpg',
+      avatar: ANAND_PAL_PHOTO_DATA_URL,
     },
     publishedAt: 'Sep 4, 2026',
     readTime: '4 min read',
@@ -438,7 +439,7 @@ For retail outlets, clinics, luxury real estate, and professional consultancies 
     author: {
       name: 'Anand Pal',
       role: 'Founder & CEO',
-      avatar: '/anand-pal-default.jpg',
+      avatar: ANAND_PAL_PHOTO_DATA_URL,
     },
     publishedAt: 'Jul 29, 2026',
     readTime: '4 min read',
