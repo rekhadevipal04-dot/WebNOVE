@@ -12,13 +12,16 @@ import {
   Zap,
   UserCheck,
   Users,
+  Camera,
 } from 'lucide-react';
 import {
   getFounderPhoto,
+  saveFounderPhoto,
   subscribeFounderPhoto,
 } from '../services/founderPhoto.ts';
 import {
   getSuryaPhoto,
+  saveSuryaPhoto,
   subscribeSuryaPhoto,
 } from '../services/suryaPhoto.ts';
 import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
@@ -167,6 +170,32 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
+                    {/* Photo Upload Trigger */}
+                    <label
+                      className="absolute top-2 right-2 p-1.5 rounded-lg bg-slate-900/80 hover:bg-blue-600 text-white cursor-pointer transition shadow border border-white/20 backdrop-blur-sm"
+                      title="Upload Anand Pal Photo"
+                    >
+                      <Camera className="w-3.5 h-3.5" />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              const url = reader.result as string;
+                              saveFounderPhoto(url);
+                              setAnandPhoto(url);
+                              onShowToast?.('success', 'Photo Updated', 'Anand Pal photo updated successfully.');
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+
                     <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px]">
                       <span className="px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700 text-slate-200 font-semibold flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -300,6 +329,32 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                       className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Photo Upload Trigger */}
+                    <label
+                      className="absolute top-2 right-2 p-1.5 rounded-lg bg-slate-900/80 hover:bg-sky-600 text-white cursor-pointer transition shadow border border-white/20 backdrop-blur-sm"
+                      title="Upload Surya Pal Photo"
+                    >
+                      <Camera className="w-3.5 h-3.5" />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              const url = reader.result as string;
+                              saveSuryaPhoto(url);
+                              setSuryaPhoto(url);
+                              onShowToast?.('success', 'Photo Updated', 'Surya Pal photo updated & saved to build.');
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
 
                     <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px]">
                       <span className="px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700 text-slate-200 font-semibold flex items-center gap-1">

@@ -60,6 +60,17 @@ export function saveSuryaPhoto(dataUrlOrPath: string): void {
   if (typeof window !== 'undefined') {
     localStorage.setItem(STORAGE_KEY, dataUrlOrPath);
     window.dispatchEvent(new CustomEvent(UPDATE_EVENT, { detail: dataUrlOrPath }));
+
+    // Send to backend/dev-server to permanently save to disk & code bundle
+    if (dataUrlOrPath.startsWith('data:image/')) {
+      fetch('/api/save-surya-photo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dataUrl: dataUrlOrPath }),
+      }).catch((err) => {
+        console.warn('Server-side Surya photo sync note:', err);
+      });
+    }
   }
 }
 
