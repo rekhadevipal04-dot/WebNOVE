@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const baseNavItems = [
     { id: 'services', label: 'Services', icon: Layers },
     { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
-    { id: 'founder-spotlight', label: 'Founder & CEO', icon: UserCheck },
+    { id: 'founder-spotlight', label: 'Leadership & Founders', icon: UserCheck },
     { id: 'customer-booking', label: 'Book Appointment', icon: Calendar },
     { id: 'portal', label: 'Client Vault', icon: Lock },
     { id: 'blog', label: 'Insights', icon: BookOpen },
@@ -359,6 +359,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
             ) : null}
+
+            {/* Theme Toggle in Mobile Drawer */}
+            <button
+              onClick={() => onToggleDarkMode()}
+              className="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 text-xs font-semibold flex items-center justify-between transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700 dark:text-slate-300" />}
+                <span>{darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</span>
+              </span>
+              <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
+                {darkMode ? '🌙 Dark Active' : '☀️ Light Active'}
+              </span>
+            </button>
 
             {!currentUser ? (
               <button

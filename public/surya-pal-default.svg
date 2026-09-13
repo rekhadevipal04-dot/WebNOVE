@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgPillars" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="40%" stop-color="#1e293b"/>
+      <stop offset="80%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <!-- Warm Golden Sun Bokeh (Top Right from Photo) -->
+    <radialGradient id="sunBokeh" cx="85%" cy="8%" r="45%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.85"/>
+      <stop offset="25%" stop-color="#fbbf24" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#d97706" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Lush Green Foliage Bokeh (Left from Photo) -->
+    <radialGradient id="greenBokeh" cx="12%" cy="40%" r="35%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.5"/>
+      <stop offset="40%" stop-color="#059669" stop-opacity="0.3"/>
+      <stop offset="80%" stop-color="#047857" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Crisp White Shirt Gradient -->
+    <linearGradient id="whiteShirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <linearGradient id="shirtShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <!-- Skin Tone Gradient (Warm Mediterranean/Indian tone) -->
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2a77a"/>
+      <stop offset="50%" stop-color="#c98a58"/>
+      <stop offset="100%" stop-color="#aa6d3f"/>
+    </linearGradient>
+
+    <!-- Hair Tone Gradient (Wavy dark natural hair) -->
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b18"/>
+      <stop offset="60%" stop-color="#110e0c"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </linearGradient>
+
+    <!-- Accent Lines -->
+    <linearGradient id="blueGlowLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas Base -->
+  <rect width="800" height="1200" fill="url(#bgPillars)"/>
+
+  <!-- Corporate Building Architectural Pillar Background -->
+  <rect x="360" y="0" width="220" height="1200" fill="#1e293b" opacity="0.45"/>
+  <rect x="580" y="0" width="220" height="1200" fill="#334155" opacity="0.3"/>
+  <line x1="360" y1="0" x2="360" y2="1200" stroke="#475569" stroke-width="1.5" opacity="0.3"/>
+  <line x1="580" y1="0" x2="580" y2="1200" stroke="#64748b" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Left Green Plant Bokeh Circles -->
+  <rect width="800" height="1200" fill="url(#greenBokeh)"/>
+  <circle cx="90" cy="280" r="45" fill="#34d399" opacity="0.35"/>
+  <circle cx="150" cy="360" r="60" fill="#10b981" opacity="0.3"/>
+  <circle cx="70" cy="480" r="55" fill="#059669" opacity="0.4"/>
+  <circle cx="130" cy="580" r="50" fill="#34d399" opacity="0.25"/>
+  <circle cx="60" cy="680" r="70" fill="#047857" opacity="0.35"/>
+
+  <!-- Sun Flare Circles in Upper Right -->
+  <rect width="800" height="1200" fill="url(#sunBokeh)"/>
+  <circle cx="680" cy="90" r="110" fill="#fef08a" opacity="0.25"/>
+  <circle cx="740" cy="180" r="60" fill="#fbbf24" opacity="0.3"/>
+  <circle cx="640" cy="240" r="40" fill="#f59e0b" opacity="0.25"/>
+  <circle cx="700" cy="340" r="50" fill="#fde68a" opacity="0.15"/>
+
+  <!-- Portrait Center Group -->
+  <g id="surya-figure" transform="translate(400, 140)">
+    
+    <!-- Hair Volume Back -->
+    <path d="M -115 130 C -125 70 -95 -5 -40 -40 C 0 -55 50 -55 90 -35 C 135 0 145 75 135 135 C 120 170 95 190 85 195 C 105 135 90 70 65 50 C 40 30 -30 30 -60 55 C -85 75 -95 135 -80 190 Z" fill="url(#hairGrad)"/>
+    
+    <!-- Neck -->
+    <path d="M -45 160 L -45 270 L 45 270 L 45 160 Z" fill="url(#skinGrad)"/>
+    <!-- Neck shadow under chin -->
+    <path d="M -45 170 C -20 200 20 200 45 170 L 45 220 C 20 240 -20 240 -45 220 Z" fill="#91592c" opacity="0.5"/>
+
+    <!-- Head & Face Structure -->
+    <path d="M -75 80 C -80 140 -65 190 -45 220 C -25 245 0 250 20 245 C 45 220 65 180 75 125 C 80 80 65 30 40 10 C 15 -10 -25 -10 -55 15 C -70 35 -75 60 -75 80 Z" fill="url(#skinGrad)"/>
+
+    <!-- Wavy Hair Main Front Layer -->
+    <path d="M -90 60 C -95 -10 -40 -45 0 -45 C 45 -45 95 -10 95 60 C 85 40 70 30 45 30 C 20 30 0 45 -20 40 C -45 35 -65 40 -90 60 Z" fill="url(#hairGrad)"/>
+    <path d="M -60 10 C -40 -20 0 -25 30 -20 C 60 -15 80 5 85 30 C 60 10 30 5 0 10 C -30 15 -50 20 -60 10 Z" fill="#2d2621"/>
+
+    <!-- Ears -->
+    <ellipse cx="-75" cy="115" rx="12" ry="24" fill="#c98a58"/>
+    <ellipse cx="75" cy="115" rx="12" ry="24" fill="#c98a58"/>
+
+    <!-- Eyebrows -->
+    <path d="M -55 82 Q -35 72 -15 84" stroke="#1c1917" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <path d="M 15 84 Q 35 72 55 82" stroke="#1c1917" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+    <!-- Eyes (Focused, Confident Leadership Gaze) -->
+    <ellipse cx="-35" cy="100" rx="9" ry="6" fill="#ffffff"/>
+    <circle cx="-35" cy="100" r="4.5" fill="#291e17"/>
+    <circle cx="-33" cy="98" r="1.5" fill="#ffffff"/>
+
+    <ellipse cx="35" cy="100" rx="9" ry="6" fill="#ffffff"/>
+    <circle cx="35" cy="100" r="4.5" fill="#291e17"/>
+    <circle cx="37" cy="98" r="1.5" fill="#ffffff"/>
+
+    <!-- Nose -->
+    <path d="M 0 95 L -3 145 L 8 147" stroke="#9a5b28" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <!-- Facial Hair: Trimmed Mustache & Goatee Beard (Matching Photo) -->
+    <path d="M -25 170 Q 0 162 25 170 Q 0 176 -25 170 Z" fill="#1c1917"/>
+    <path d="M -16 185 Q 0 183 16 185" stroke="#834d23" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- Chin Goatee Beard -->
+    <path d="M -18 205 C -15 235 15 235 18 205 C 10 215 -10 215 -18 205 Z" fill="#1c1917"/>
+
+    <!-- Crisp White Button-Down Shirt -->
+    <g id="shirt">
+      <!-- Body of Shirt -->
+      <path d="M -170 330 L -120 270 L -45 270 L 0 310 L 45 270 L 120 270 L 170 330 L 195 530 L 180 780 L -180 780 L -195 530 Z" fill="url(#whiteShirtGrad)"/>
+
+      <!-- Shirt Collar -->
+      <path d="M -45 270 L 0 315 L -65 345 L -85 285 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+      <path d="M 45 270 L 0 315 L 65 345 L 85 285 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+      <!-- Inner Collar Stand -->
+      <path d="M -40 270 L 0 295 L 40 270 Z" fill="#94a3b8" opacity="0.3"/>
+
+      <!-- Front Center Placket & Buttons -->
+      <rect x="-14" y="315" width="28" height="465" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <line x1="0" y1="315" x2="0" y2="780" stroke="#cbd5e1" stroke-width="1"/>
+      <!-- Shirt Buttons -->
+      <circle cx="0" cy="360" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="0" cy="440" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="0" cy="520" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="0" cy="600" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+      <circle cx="0" cy="680" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+
+      <!-- Left Chest Pocket (Right side from viewer's perspective) -->
+      <path d="M 65 420 L 140 420 L 140 505 L 102 525 L 65 505 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Sleeves (Rolled up at forearms) -->
+      <!-- Left Arm (Viewer's Left) -->
+      <path d="M -170 330 L -230 480 L -235 600 L -175 600 L -165 480 Z" fill="url(#whiteShirtGrad)"/>
+      <!-- Rolled Cuff Left -->
+      <rect x="-240" y="585" width="70" height="35" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+      <!-- Forearm Skin -->
+      <path d="M -230 620 L -215 720 L -165 720 L -180 620 Z" fill="url(#skinGrad)"/>
+
+      <!-- Right Arm (Viewer's Right) with Watch -->
+      <path d="M 170 330 L 230 480 L 235 600 L 175 600 L 165 480 Z" fill="url(#whiteShirtGrad)"/>
+      <!-- Rolled Cuff Right -->
+      <rect x="170" y="585" width="70" height="35" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+      <!-- Forearm Skin Right -->
+      <path d="M 180 620 L 165 720 L 215 720 L 230 620 Z" fill="url(#skinGrad)"/>
+
+      <!-- Executive Wristwatch (On left wrist / viewer's right) -->
+      <rect x="180" y="685" width="45" height="14" rx="3" fill="#18181b"/>
+      <circle cx="202" cy="692" r="13" fill="#09090b" stroke="#71717a" stroke-width="2"/>
+      <circle cx="202" cy="692" r="10" fill="#18181b"/>
+      <line x1="202" y1="692" x2="202" y2="685" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="202" y1="692" x2="208" y2="692" stroke="#38bdf8" stroke-width="1.5"/>
+    </g>
+
+    <!-- Black Trousers & Leather Belt with Buckle (Hands in Pockets pose) -->
+    <g id="trousers" transform="translate(0, 770)">
+      <!-- Black Leather Belt -->
+      <rect x="-185" y="0" width="370" height="38" rx="4" fill="#18181b" stroke="#27272a" stroke-width="1.5"/>
+      <!-- Silver Belt Buckle -->
+      <rect x="-24" y="2" width="48" height="34" rx="4" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+      <rect x="-8" y="7" width="16" height="24" fill="#09090b"/>
+      <line x1="0" y1="6" x2="0" y2="32" stroke="#e2e8f0" stroke-width="3"/>
+
+      <!-- Black Formal Pants -->
+      <path d="M -190 38 L -175 250 L 175 250 L 190 38 Z" fill="#09090b"/>
+      <!-- Pocket Inset Lines (Hands tucked in pockets) -->
+      <path d="M -170 45 L -120 120" stroke="#27272a" stroke-width="2.5"/>
+      <path d="M 170 45 L 120 120" stroke="#27272a" stroke-width="2.5"/>
+      <!-- Center Fly -->
+      <line x1="0" y1="38" x2="0" y2="180" stroke="#27272a" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Bottom Executive Badge & Typography Frame -->
+  <g transform="translate(400, 1060)">
+    <!-- Dark Glassmorphism Plate -->
+    <rect x="-360" y="-80" width="720" height="170" rx="24" fill="#020617" fill-opacity="0.92" stroke="#1e293b" stroke-width="2"/>
+    <!-- Glow line on top of card -->
+    <line x1="-360" y1="-80" x2="360" y2="-80" stroke="url(#blueGlowLine)" stroke-width="3"/>
+
+    <!-- Small Badge Pill -->
+    <rect x="-110" y="-62" width="220" height="26" rx="13" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1.5"/>
+    <circle cx="-85" cy="-49" r="4" fill="#38bdf8"/>
+    <text x="5" y="-44" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="11" letter-spacing="2.5" fill="#38bdf8">
+      CO-FOUNDER &amp; DIRECTOR
+    </text>
+
+    <!-- Name Header -->
+    <text x="0" y="-3" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="34" letter-spacing="4" fill="#ffffff">
+      SURYA PAL
+    </text>
+
+    <!-- Subtitle -->
+    <text x="0" y="32" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="14" letter-spacing="2" fill="#94a3b8">
+      WEBNOVA DIGITAL AGENCY &bull; STRATEGY &amp; PRODUCT LEAD
+    </text>
+
+    <text x="0" y="58" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="12" letter-spacing="1" fill="#38bdf8">
+      Official Leadership Profile Verified
+    </text>
+  </g>
+</svg>

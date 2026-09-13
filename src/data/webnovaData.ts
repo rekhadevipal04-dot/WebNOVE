@@ -8,6 +8,7 @@ import {
   AnalyticsData,
 } from '../types/index.ts';
 import { ANAND_PAL_PHOTO_DATA_URL } from './anandPalPhoto.ts';
+import { SURYA_PAL_PHOTO_DATA_URL } from './suryaPalPhoto.ts';
 
 export const COMPANY_INFO = {
   name: 'WEBNOVA',
@@ -381,9 +382,9 @@ Brings open rates above 94% compared to traditional email's 18%.
 Prominently display verified customer reviews with photos, clear return policies, and transparent COD verification.
     `,
     author: {
-      name: 'Suryapartap Pal',
+      name: 'Surya Pal',
       role: 'Co-Founder & Director',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+      avatar: SURYA_PAL_PHOTO_DATA_URL,
     },
     publishedAt: 'Aug 28, 2026',
     readTime: '6 min read',
@@ -412,9 +413,9 @@ Our continuous maintenance programs provide:
 - Routine speed auditing and script minification
     `,
     author: {
-      name: 'Suryapartap Pal',
+      name: 'Surya Pal',
       role: 'Co-Founder & Director',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+      avatar: SURYA_PAL_PHOTO_DATA_URL,
     },
     publishedAt: 'Aug 15, 2026',
     readTime: '5 min read',

@@ -17,7 +17,9 @@ import {
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
 import { getFounderPhoto, subscribeFounderPhoto } from '../services/founderPhoto.ts';
+import { getSuryaPhoto, subscribeSuryaPhoto } from '../services/suryaPhoto.ts';
 import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
+import { SURYA_PAL_PHOTO_DATA_URL } from '../data/suryaPalPhoto.ts';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -35,11 +37,19 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenQR,
 }) => {
   const [founderPhoto, setFounderPhoto] = useState<string>(() => getFounderPhoto());
+  const [suryaPhoto, setSuryaPhoto] = useState<string>(() => getSuryaPhoto());
 
   useEffect(() => {
-    return subscribeFounderPhoto((newPhoto) => {
+    const unsubFounder = subscribeFounderPhoto((newPhoto) => {
       setFounderPhoto(newPhoto);
     });
+    const unsubSurya = subscribeSuryaPhoto((newPhoto) => {
+      setSuryaPhoto(newPhoto);
+    });
+    return () => {
+      unsubFounder();
+      unsubSurya();
+    };
   }, []);
 
   return (
@@ -178,15 +188,32 @@ export const Hero: React.FC<HeroProps> = ({
                       </div>
                     </button>
 
-                    <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <div className="w-8 h-8 rounded-lg bg-sky-600/30 border border-sky-400/40 flex items-center justify-center font-bold text-xs text-sky-300">
-                        SP
+                    <button
+                      type="button"
+                      onClick={() => onNavigate('founder-spotlight')}
+                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-sky-400/40 text-left transition-all group cursor-pointer"
+                      title="View Surya Pal Co-Founder & Director Profile"
+                    >
+                      <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-slate-900 border border-sky-400/50 flex-shrink-0 shadow-md">
+                        <img
+                          src={suryaPhoto || SURYA_PAL_PHOTO_DATA_URL}
+                          alt="Surya Pal - Co-Founder & Director"
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = SURYA_PAL_PHOTO_DATA_URL;
+                          }}
+                          className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                        />
+                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-900" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white tracking-wide">SURYAPARTAP PAL</h4>
+                        <h4 className="text-xs font-bold text-white tracking-wide flex items-center gap-1 group-hover:text-sky-300 transition-colors">
+                          <span>SURYA PAL</span>
+                          <span className="text-[10px] text-sky-400">↗</span>
+                        </h4>
                         <p className="text-[10px] font-semibold text-sky-400 uppercase">CO-FOUNDER &amp; DIRECTOR</p>
                       </div>
-                    </div>
+                    </button>
                   </div>
                 </div>
 

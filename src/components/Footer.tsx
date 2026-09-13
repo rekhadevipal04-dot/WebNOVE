@@ -39,16 +39,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenQR, onOpenAdmi
             </p>
 
             <div className="pt-2">
-              <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-1">
+              <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-1.5">
                 <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
                   Founders &amp; Leadership
                 </span>
-                <p className="text-white font-semibold">
-                  Anand Pal <span className="text-blue-400 font-normal">(Founder &amp; CEO)</span>
-                </p>
-                <p className="text-white font-semibold">
-                  Suryapartap Pal <span className="text-sky-400 font-normal">(Co-Founder &amp; Director)</span>
-                </p>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('founder-spotlight')}
+                  className="text-white font-semibold hover:text-blue-300 transition-colors flex items-center justify-between w-full text-left cursor-pointer group"
+                >
+                  <span>Anand Pal <span className="text-blue-400 font-normal text-[11px]">(Founder &amp; CEO)</span></span>
+                  <span className="text-slate-500 group-hover:text-blue-400 text-[10px]">↗</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('founder-spotlight')}
+                  className="text-white font-semibold hover:text-sky-300 transition-colors flex items-center justify-between w-full text-left cursor-pointer group"
+                >
+                  <span>Surya Pal <span className="text-sky-400 font-normal text-[11px]">(Co-Founder &amp; Director)</span></span>
+                  <span className="text-slate-500 group-hover:text-sky-400 text-[10px]">↗</span>
+                </button>
               </div>
             </div>
 
@@ -120,6 +130,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenQR, onOpenAdmi
               Explore
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-400">
+              <li>
+                <button
+                  onClick={() => onNavigate('founder-spotlight')}
+                  className="hover:text-blue-400 transition-colors"
+                >
+                  Leadership &amp; Founders
+                </button>
+              </li>
               <li>
                 <button
                   onClick={() => onNavigate('portfolio')}
