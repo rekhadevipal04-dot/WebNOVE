@@ -28,8 +28,6 @@ import {
   UserCheck,
   Globe,
   UploadCloud,
-  Camera,
-  Upload,
 } from 'lucide-react';
 import { BookingRecord, updateBookingStatusInDb } from '../services/bookingDb.ts';
 import { getAdminUpdateWhatsAppUrl } from '../services/whatsappService.ts';
@@ -41,6 +39,7 @@ import {
   getSuryaPhoto,
   subscribeSuryaPhoto,
 } from '../services/suryaPhoto.ts';
+import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
 import { SURYA_PAL_PHOTO_DATA_URL } from '../data/suryaPalPhoto.ts';
 import {
   ChatInquiry,
@@ -481,10 +480,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 w-full sm:w-auto">
+              <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Permanent Photo Set</span>
+                  <span>Official Profile Active</span>
                 </span>
               </div>
             </div>
@@ -498,7 +497,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     alt="Surya Pal - Co-Founder & Director"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = SURYA_PAL_PHOTO_DATA_URL;
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src !== SURYA_PAL_PHOTO_DATA_URL) {
+                        target.src = SURYA_PAL_PHOTO_DATA_URL;
+                      }
                     }}
                     className="w-full h-full object-cover"
                   />
@@ -517,10 +519,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 w-full sm:w-auto">
+              <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Permanent Photo Set</span>
+                  <span>Official Profile Active</span>
                 </span>
               </div>
             </div>

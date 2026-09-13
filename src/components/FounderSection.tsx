@@ -33,6 +33,7 @@ type LeadershipView = 'both' | 'anand' | 'surya';
 
 export const FounderSection: React.FC<FounderSectionProps> = ({
   onOpenBooking,
+  onShowToast,
 }) => {
   const [anandPhoto, setAnandPhoto] = useState<string>(() => getFounderPhoto());
   const [suryaPhoto, setSuryaPhoto] = useState<string>(() => getSuryaPhoto());
@@ -157,11 +158,15 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                       alt="Anand Pal - Founder & CEO of WEBNOVA"
                       referrerPolicy="no-referrer"
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = ANAND_PAL_PHOTO_DATA_URL;
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.src !== ANAND_PAL_PHOTO_DATA_URL) {
+                          target.src = ANAND_PAL_PHOTO_DATA_URL;
+                        }
                       }}
                       className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
                     <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px]">
                       <span className="px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700 text-slate-200 font-semibold flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -287,11 +292,15 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                       alt="Surya Pal - Co-Founder & Director of WEBNOVA"
                       referrerPolicy="no-referrer"
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = SURYA_PAL_PHOTO_DATA_URL;
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.src !== SURYA_PAL_PHOTO_DATA_URL) {
+                          target.src = SURYA_PAL_PHOTO_DATA_URL;
+                        }
                       }}
                       className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
                     <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px]">
                       <span className="px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700 text-slate-200 font-semibold flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

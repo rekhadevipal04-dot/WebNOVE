@@ -173,7 +173,10 @@ export const Hero: React.FC<HeroProps> = ({
                           alt="Anand Pal - Founder & CEO"
                           referrerPolicy="no-referrer"
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = ANAND_PAL_PHOTO_DATA_URL;
+                            const target = e.currentTarget as HTMLImageElement;
+                            if (target.src !== ANAND_PAL_PHOTO_DATA_URL) {
+                              target.src = ANAND_PAL_PHOTO_DATA_URL;
+                            }
                           }}
                           className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
                         />
@@ -200,7 +203,10 @@ export const Hero: React.FC<HeroProps> = ({
                           alt="Surya Pal - Co-Founder & Director"
                           referrerPolicy="no-referrer"
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = SURYA_PAL_PHOTO_DATA_URL;
+                            const target = e.currentTarget as HTMLImageElement;
+                            if (target.src !== SURYA_PAL_PHOTO_DATA_URL) {
+                              target.src = SURYA_PAL_PHOTO_DATA_URL;
+                            }
                           }}
                           className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
                         />

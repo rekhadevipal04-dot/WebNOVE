@@ -25,12 +25,32 @@ const UPDATE_EVENT = 'webnova_surya_photo_updated';
 export function getSuryaPhoto(): string {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem(STORAGE_KEY);
+    // If a valid custom photo was uploaded (data:image/jpeg, png, webp) or valid external image
     if (
       saved &&
       saved !== '/surya-pal-default.svg' &&
-      (saved.startsWith('data:image/') || saved.startsWith('http'))
+      !saved.includes('bull') &&
+      saved.length > 50 &&
+      (saved.startsWith('data:image/jpeg') ||
+        saved.startsWith('data:image/png') ||
+        saved.startsWith('data:image/webp') ||
+        (saved.startsWith('http') && !saved.includes('surya-pal-default.svg')))
     ) {
       return saved;
+    }
+    // Automatically purge any stale/broken legacy values
+    if (
+      saved &&
+      (saved === '/surya-pal-default.svg' ||
+        saved.includes('bull') ||
+        saved.startsWith('data:image/svg') ||
+        saved.length < 50)
+    ) {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // ignore
+      }
     }
   }
   return DEFAULT_SURYA_INFO.defaultPhoto;
