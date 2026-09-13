@@ -28,18 +28,15 @@ import {
   UserCheck,
   Globe,
   UploadCloud,
-  Camera,
 } from 'lucide-react';
 import { BookingRecord, updateBookingStatusInDb } from '../services/bookingDb.ts';
 import { getAdminUpdateWhatsAppUrl } from '../services/whatsappService.ts';
 import {
   getFounderPhoto,
-  saveFounderPhoto,
   subscribeFounderPhoto,
 } from '../services/founderPhoto.ts';
 import {
   getSuryaPhoto,
-  saveSuryaPhoto,
   subscribeSuryaPhoto,
 } from '../services/suryaPhoto.ts';
 import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
@@ -488,27 +485,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Official Profile Active</span>
                 </span>
-                <label className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold cursor-pointer transition shadow">
-                  <Camera className="w-3.5 h-3.5" />
-                  <span>Update Photo</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                          const url = reader.result as string;
-                          saveFounderPhoto(url);
-                          onShowToast?.('success', 'Photo Updated', 'Anand Pal photo updated & saved to build.');
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
-                  />
-                </label>
               </div>
             </div>
 
@@ -548,27 +524,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Official Profile Active</span>
                 </span>
-                <label className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold cursor-pointer transition shadow">
-                  <Camera className="w-3.5 h-3.5" />
-                  <span>Update Photo</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                          const url = reader.result as string;
-                          saveSuryaPhoto(url);
-                          onShowToast?.('success', 'Photo Updated', 'Surya Pal photo updated & saved to build.');
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
-                  />
-                </label>
               </div>
             </div>
           </div>
