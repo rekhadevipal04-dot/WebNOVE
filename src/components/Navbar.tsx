@@ -23,7 +23,7 @@ import { AppNotification, ClientUser } from '../types/index.ts';
 
 interface NavbarProps {
   darkMode: boolean;
-  onToggleDarkMode: () => void;
+  onToggleDarkMode: (targetMode?: boolean) => void;
   activeSection: string;
   onNavigate: (sectionId: string) => void;
   onOpenQR: () => void;
@@ -188,15 +188,43 @@ export const Navbar: React.FC<NavbarProps> = ({
               onNavigate={handleNavClick}
             />
 
-            {/* Dark Mode Switch */}
-            <button
-              onClick={onToggleDarkMode}
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              aria-label="Toggle dark mode"
-              title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            {/* Theme Selector: Crystal Clear Light (Day) / Dark (Night) Toggle */}
+            <div
+              className="flex items-center p-0.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 text-xs shadow-xs"
+              role="group"
+              aria-label="Theme Mode Selection"
             >
-              {darkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
-            </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (darkMode) onToggleDarkMode(false);
+                }}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  !darkMode
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
+                }`}
+                title="Light Theme / Safed Mode (दिन)"
+              >
+                <Sun className={`w-3.5 h-3.5 ${!darkMode ? 'text-amber-500 fill-amber-400' : 'text-slate-400'}`} />
+                <span className="hidden xl:inline text-[11px]">Light</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (!darkMode) onToggleDarkMode(true);
+                }}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  darkMode
+                    ? 'bg-slate-900 text-sky-400 shadow-sm border border-slate-700/80'
+                    : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
+                }`}
+                title="Dark Theme / Night Mode (रात)"
+              >
+                <Moon className={`w-3.5 h-3.5 ${darkMode ? 'text-sky-400 fill-sky-400' : 'text-slate-400'}`} />
+                <span className="hidden xl:inline text-[11px]">Dark</span>
+              </button>
+            </div>
 
             {/* Client Portal Button / User Avatar */}
             {currentUser ? (
@@ -360,19 +388,45 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             ) : null}
 
-            {/* Theme Toggle in Mobile Drawer */}
-            <button
-              onClick={() => onToggleDarkMode()}
-              className="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 text-xs font-semibold flex items-center justify-between transition-colors"
-            >
-              <span className="flex items-center gap-2">
-                {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700 dark:text-slate-300" />}
-                <span>{darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</span>
-              </span>
-              <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">
-                {darkMode ? '🌙 Dark Active' : '☀️ Light Active'}
-              </span>
-            </button>
+            {/* Theme Selector in Mobile Drawer */}
+            <div className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+              <div className="flex items-center justify-between text-xs px-1 font-semibold text-slate-700 dark:text-slate-300">
+                <span>Display Theme (थीम चुनें)</span>
+                <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400">
+                  {darkMode ? '🌙 Night Mode Active' : '☀️ Day Mode Active'}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-200/70 dark:bg-slate-800/80 rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (darkMode) onToggleDarkMode(false);
+                  }}
+                  className={`py-2 px-3 rounded-md text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    !darkMode
+                      ? 'bg-white text-blue-600 shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  <Sun className={`w-4 h-4 ${!darkMode ? 'text-amber-500 fill-amber-400' : 'text-slate-400'}`} />
+                  <span>Light (दिन)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!darkMode) onToggleDarkMode(true);
+                  }}
+                  className={`py-2 px-3 rounded-md text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    darkMode
+                      ? 'bg-slate-950 text-sky-400 shadow-sm border border-slate-700'
+                      : 'text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  <Moon className={`w-4 h-4 ${darkMode ? 'text-sky-400 fill-sky-400' : 'text-slate-400'}`} />
+                  <span>Dark (रात)</span>
+                </button>
+              </div>
+            </div>
 
             {!currentUser ? (
               <button

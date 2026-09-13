@@ -25,7 +25,11 @@ const UPDATE_EVENT = 'webnova_surya_photo_updated';
 export function getSuryaPhoto(): string {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && (saved.startsWith('data:image/') || saved.startsWith('http') || saved.startsWith('/'))) {
+    if (
+      saved &&
+      saved !== '/surya-pal-default.svg' &&
+      (saved.startsWith('data:image/') || saved.startsWith('http'))
+    ) {
       return saved;
     }
   }

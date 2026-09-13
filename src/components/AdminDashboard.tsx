@@ -41,6 +41,17 @@ import {
   getSuryaPhoto,
   subscribeSuryaPhoto,
 } from '../services/suryaPhoto.ts';
+import { SURYA_PAL_PHOTO_DATA_URL } from '../data/suryaPalPhoto.ts';
+import {
+  ChatInquiry,
+  getStoredChatInquiries,
+  updateChatInquiryStatus,
+  deleteChatInquiry,
+  getDirectWhatsAppChatUrl,
+  WHATSAPP_DESK_DISPLAY,
+  WHATSAPP_DESK_NUMBER,
+  formatPhoneForWhatsApp,
+} from '../services/supportChatService.ts';
 import {
   PRIMARY_ADMIN_EMAIL,
   SECONDARY_ADMIN_EMAIL,
@@ -114,6 +125,52 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       unsubSurya();
     };
   }, []);
+
+  // Live Chat & WhatsApp Inquiries State
+  const [activeAdminView, setActiveAdminView] = useState<'bookings' | 'chat_desk'>('bookings');
+  const [chatInquiries, setChatInquiries] = useState<ChatInquiry[]>(() => getStoredChatInquiries());
+  const [chatSearchQuery, setChatSearchQuery] = useState('');
+  const [chatStatusFilter, setChatStatusFilter] = useState<'all' | 'new' | 'reviewed' | 'resolved'>('all');
+
+  React.useEffect(() => {
+    const handleUpdate = () => {
+      setChatInquiries(getStoredChatInquiries());
+    };
+    window.addEventListener('webnova_new_chat_inquiry', handleUpdate);
+    window.addEventListener('webnova_chat_inquiries_updated', handleUpdate);
+    return () => {
+      window.removeEventListener('webnova_new_chat_inquiry', handleUpdate);
+      window.removeEventListener('webnova_chat_inquiries_updated', handleUpdate);
+    };
+  }, []);
+
+  const handleUpdateChatStatus = (id: string, newStatus: 'new' | 'reviewed' | 'resolved') => {
+    updateChatInquiryStatus(id, newStatus);
+    setChatInquiries(getStoredChatInquiries());
+    onShowToast('success', 'Inquiry Status Updated', `Status changed to ${newStatus.toUpperCase()}`);
+  };
+
+  const handleDeleteChatInquiry = (id: string) => {
+    deleteChatInquiry(id);
+    setChatInquiries(getStoredChatInquiries());
+    onShowToast('info', 'Inquiry Removed', 'The chat record has been removed.');
+  };
+
+  // Filtered Chat Inquiries
+  const filteredChatInquiries = chatInquiries.filter((inq) => {
+    if (chatStatusFilter !== 'all' && inq.status !== chatStatusFilter) {
+      return false;
+    }
+    if (chatSearchQuery.trim()) {
+      const q = chatSearchQuery.toLowerCase();
+      const matchMsg = inq.message.toLowerCase().includes(q);
+      const matchName = (inq.clientName || '').toLowerCase().includes(q);
+      const matchPhone = (inq.clientPhone || '').toLowerCase().includes(q);
+      const matchId = inq.id.toLowerCase().includes(q);
+      return matchMsg || matchName || matchPhone || matchId;
+    }
+    return true;
+  });
 
   const handleCopyDashboardReport = () => {
     const report = buildFullDashboardReportEmail(bookings);
@@ -437,9 +494,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <div className="flex items-center gap-3">
                 <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border-2 border-sky-500/60 shadow-md flex-shrink-0">
                   <img
-                    src={suryaPhoto}
+                    src={suryaPhoto || SURYA_PAL_PHOTO_DATA_URL}
                     alt="Surya Pal - Co-Founder & Director"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = SURYA_PAL_PHOTO_DATA_URL;
+                    }}
                     className="w-full h-full object-cover"
                   />
                   <span className="absolute bottom-0.5 right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-slate-900" />
@@ -467,6 +527,268 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         </div>
 
+        {/* Primary Operations Switcher: Bookings vs Live Support Chat Desk */}
+        <div className="mb-6 p-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <button
+              onClick={() => setActiveAdminView('bookings')}
+              className={`flex-1 sm:flex-initial px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                activeAdminView === 'bookings'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Calendar className="w-4 h-4" />
+              <span>Appointment Bookings ({totalCount})</span>
+            </button>
+
+            <button
+              onClick={() => setActiveAdminView('chat_desk')}
+              className={`flex-1 sm:flex-initial px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                activeAdminView === 'chat_desk'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20'
+                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+              }`}
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <span>Support Desk &amp; WhatsApp Inquiries ({chatInquiries.length})</span>
+              {chatInquiries.some((c) => c.status === 'new') && (
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              )}
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium px-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Direct WhatsApp Desk: <strong className="text-emerald-600 dark:text-emerald-400">{WHATSAPP_DESK_DISPLAY}</strong></span>
+          </div>
+        </div>
+
+        {activeAdminView === 'chat_desk' ? (
+          /* ========================================================= */
+          /* LIVE CHAT & WHATSAPP DESK VIEW */
+          /* ========================================================= */
+          <div className="space-y-6 animate-in fade-in duration-200">
+            {/* Live Chat Desk Banner */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-slate-950 text-white border border-emerald-800/60 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                  <MessageCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-sm font-extrabold text-white">
+                      Support Desk Live Chat Inquiries
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                      <span>WhatsApp Direct Forwarding Active</span>
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Every message from the website support chat is logged here and forwarded to WhatsApp (<strong>{WHATSAPP_DESK_DISPLAY}</strong>) &amp; <strong>{PRIMARY_ADMIN_EMAIL}</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 w-full md:w-auto">
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${WHATSAPP_DESK_NUMBER}&text=${encodeURIComponent('Hello Anand Pal, checking WEBNOVA live support desk.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full md:w-auto px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Open WhatsApp Desk ({WHATSAPP_DESK_DISPLAY})</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Chat Filters & Search */}
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+                {(
+                  [
+                    { id: 'all', label: 'All Inquiries', count: chatInquiries.length },
+                    { id: 'new', label: 'New / Unread', count: chatInquiries.filter((c) => c.status === 'new').length },
+                    { id: 'reviewed', label: 'In Progress', count: chatInquiries.filter((c) => c.status === 'reviewed').length },
+                    { id: 'resolved', label: 'Resolved', count: chatInquiries.filter((c) => c.status === 'resolved').length },
+                  ] as const
+                ).map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setChatStatusFilter(tab.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                      chatStatusFilter === tab.id
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    <span>{tab.label}</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/15 dark:bg-white/20 font-bold">
+                      {tab.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="relative flex-1 sm:w-72">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+                <input
+                  type="text"
+                  placeholder="Search chat message, client phone..."
+                  value={chatSearchQuery}
+                  onChange={(e) => setChatSearchQuery(e.target.value)}
+                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                />
+              </div>
+            </div>
+
+            {/* Inquiries List */}
+            {filteredChatInquiries.length === 0 ? (
+              <div className="p-12 text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3">
+                <div className="w-14 h-14 mx-auto rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center">
+                  <MessageCircle className="w-7 h-7" />
+                </div>
+                <h4 className="text-base font-bold text-slate-800 dark:text-slate-200">
+                  {chatInquiries.length === 0 ? 'No Chat Inquiries Yet' : 'No matching inquiries found'}
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                  When a client types questions in the WEBNOVA Support Desk chat widget on the website, every message will immediately be synchronized here and sent to your WhatsApp number ({WHATSAPP_DESK_DISPLAY}).
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4">
+                {filteredChatInquiries.map((inq) => {
+                  const directWhatsAppUrl = getDirectWhatsAppChatUrl(inq.message, inq.clientName, inq.clientPhone);
+                  const clientPhoneUrl = inq.clientPhone
+                    ? `https://api.whatsapp.com/send?phone=${formatPhoneForWhatsApp(inq.clientPhone)}&text=${encodeURIComponent(`Hello ${inq.clientName || 'there'}, regarding your inquiry at WEBNOVA: "${inq.message}"`)}`
+                    : null;
+
+                  return (
+                    <div
+                      key={inq.id}
+                      className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+                    >
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">
+                            {inq.id}
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                              inq.status === 'new'
+                                ? 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border border-amber-300'
+                                : inq.status === 'reviewed'
+                                ? 'bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-300'
+                                : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-300'
+                            }`}
+                          >
+                            {inq.status === 'new' ? 'New Inquiry' : inq.status}
+                          </span>
+                          <span className="text-[11px] text-slate-400">
+                            {inq.timestamp}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                            <CheckCircle2 className="w-3 h-3" />
+                            <span>Forwarded to WhatsApp</span>
+                          </span>
+                        </div>
+
+                        {/* Speech Bubble */}
+                        <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-xs text-slate-900 dark:text-slate-100">
+                          <p className="whitespace-pre-line font-medium leading-relaxed">
+                            "{inq.message}"
+                          </p>
+                        </div>
+
+                        {/* Client Details Row */}
+                        <div className="flex items-center gap-4 text-xs text-slate-600 dark:text-slate-300 flex-wrap pt-1">
+                          <div className="flex items-center gap-1.5">
+                            <User className="w-3.5 h-3.5 text-slate-400" />
+                            <span className="font-semibold">{inq.clientName || 'Website Live Visitor'}</span>
+                          </div>
+
+                          {inq.clientPhone ? (
+                            <div className="flex items-center gap-1.5">
+                              <Phone className="w-3.5 h-3.5 text-emerald-500" />
+                              <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                                {inq.clientPhone}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-[11px] text-slate-400 italic">
+                              (No phone entered by client)
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex flex-wrap md:flex-col items-stretch gap-2 w-full md:w-56 flex-shrink-0">
+                        {/* Send on WhatsApp Desk */}
+                        <a
+                          href={directWhatsAppUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" />
+                          <span>Open in WhatsApp Desk</span>
+                        </a>
+
+                        {/* WhatsApp to Client directly if phone entered */}
+                        {clientPhoneUrl && (
+                          <a
+                            href={clientPhoneUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                          >
+                            <Send className="w-3.5 h-3.5" />
+                            <span>WhatsApp Client Directly</span>
+                          </a>
+                        )}
+
+                        <div className="flex items-center gap-2">
+                          {inq.status !== 'resolved' ? (
+                            <button
+                              onClick={() => handleUpdateChatStatus(inq.id, 'resolved')}
+                              className="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 dark:bg-slate-800 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-300 hover:text-emerald-600 text-xs font-medium border border-slate-200 dark:border-slate-700 transition cursor-pointer flex items-center justify-center gap-1"
+                            >
+                              <Check className="w-3 h-3 text-emerald-500" />
+                              <span>Mark Resolved</span>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleUpdateChatStatus(inq.id, 'new')}
+                              className="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-medium border border-slate-200 dark:border-slate-700 transition cursor-pointer flex items-center justify-center gap-1"
+                            >
+                              <RotateCcw className="w-3 h-3" />
+                              <span>Reopen</span>
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => handleDeleteChatInquiry(inq.id)}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition cursor-pointer"
+                            title="Delete Inquiry"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ) : (
+          /* ========================================================= */
+          /* APPOINTMENT BOOKINGS VIEW (ORIGINAL TABLE & FILTERS) */
+          /* ========================================================= */
+          <>
         {/* Action Alert Banner for Pending Requests */}
         {pendingCount > 0 && (
           <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-300 dark:border-amber-700/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
@@ -1048,6 +1370,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             );
           })}
         </div>
+          </>
+        )}
       </div>
 
       {/* ========================================================= */}

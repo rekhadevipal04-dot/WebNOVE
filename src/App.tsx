@@ -67,12 +67,15 @@ export default function App() {
     }
   }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+  const toggleDarkMode = (targetMode?: boolean) => {
+    const nextMode = typeof targetMode === 'boolean' ? targetMode : !darkMode;
+    setDarkMode(nextMode);
     addToast(
       'info',
-      darkMode ? 'Light Mode Enabled' : 'Dark Mode Enabled',
-      darkMode ? 'Interface switched to clean daylight contrast.' : 'Interface switched to low-light navy contrast.'
+      nextMode ? '🌙 Night Mode Activated (Dark Theme)' : '☀️ Day Mode Activated (Light Theme)',
+      nextMode
+        ? 'Interface switched to low-light dark navy theme.'
+        : 'Interface switched to clean daylight contrast theme.'
     );
   };
 
