@@ -1,38 +1,90 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="favWebnovaGrad" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stopColor="#1E40AF" />
-      <stop offset="50%" stopColor="#2563EB" />
-      <stop offset="100%" stopColor="#38BDF8" />
+    <!-- Crisp Radiant Light Background -->
+    <linearGradient id="favBg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#F8FAFC" />
+      <stop offset="100%" stop-color="#E0F2FE" />
     </linearGradient>
-    <linearGradient id="favRingGrad" x1="10" y1="80" x2="90" y2="20" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stopColor="#2563EB" />
-      <stop offset="70%" stopColor="#38BDF8" />
-      <stop offset="100%" stopColor="#93C5FD" />
+
+    <!-- Vibrant Tech Cyan-to-Blue Border -->
+    <linearGradient id="favBorder" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+
+    <!-- Orbit Swoosh Gradient -->
+    <linearGradient id="favOrbit" x1="10" y1="80" x2="90" y2="20" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="50%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#60A5FA" />
+    </linearGradient>
+
+    <!-- 'W' Main Stem: Deep Royal Blue to Vivid Blue -->
+    <linearGradient id="favW1" x1="20" y1="25" x2="50" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1E40AF" />
+      <stop offset="40%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <!-- 'W' Accent Stem: Vivid Blue to Electric Cyan -->
+    <linearGradient id="favW2" x1="50" y1="25" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="50%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#06B6D4" />
     </linearGradient>
   </defs>
-  <rect width="100" height="100" rx="24" fill="#0F172A" />
-  <!-- Planetary Orbit Ring -->
+
+  <!-- Luminous White Squircle Badge -->
+  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#favBg)" stroke="url(#favBorder)" stroke-width="3" />
+
+  <!-- Subtle High-Gloss Inner Glass Ring -->
+  <rect x="6.5" y="6.5" width="87" height="87" rx="21.5" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
+
+  <!-- Planetary Orbit Arc -->
   <path
-    d="M 16 60 C 16 74, 50 82, 74 70 C 84 65, 90 54, 86 44 C 82 34, 70 26, 56 24"
-    stroke="url(#favRingGrad)"
+    d="M 14 62 C 14 78, 50 86, 76 74 C 88 68, 92 56, 88 44 C 84 32, 70 24, 54 22"
+    stroke="url(#favOrbit)"
     stroke-width="4"
     stroke-linecap="round"
     fill="none"
   />
-  <!-- Stylized Sharp 'W' -->
+
+  <!-- Bold Modern Geometric 'W' -->
   <path
-    d="M 24 30 L 37 72 L 50 38 L 63 72 L 76 30"
-    stroke="url(#favWebnovaGrad)"
-    stroke-width="8"
+    d="M 22 28 L 36 74 L 50 38 L 64 74 L 78 28"
+    stroke="url(#favW1)"
+    stroke-width="9"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
   />
-  <!-- Star Accent -->
+
+  <!-- Dynamic Gradient Accent on Right Wing -->
   <path
-    d="M 80 14 Q 80 22, 72 22 Q 80 22, 80 30 Q 80 22, 88 22 Q 80 22, 80 14 Z"
+    d="M 50 38 L 64 74 L 78 28"
+    stroke="url(#favW2)"
+    stroke-width="9"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- Starburst Glow Aura -->
+  <circle cx="80" cy="20" r="9" fill="#38BDF8" fill-opacity="0.35" />
+
+  <!-- 4-Point Nova Starburst (Symbol of WEBNOVA) -->
+  <path
+    d="M 80 11 Q 80 20, 71 20 Q 80 20, 80 29 Q 80 20, 89 20 Q 80 20, 80 11 Z"
+    fill="#0284C7"
+  />
+  <path
+    d="M 80 14 Q 80 20, 74 20 Q 80 20, 80 26 Q 80 20, 86 20 Q 80 20, 80 14 Z"
     fill="#38BDF8"
   />
-  <circle cx="80" cy="22" r="1.5" fill="#FFFFFF" />
+  <circle cx="80" cy="20" r="1.5" fill="#FFFFFF" />
+
+  <!-- Orbit Particle Accent -->
+  <circle cx="17" cy="56" r="2" fill="#0284C7" />
 </svg>

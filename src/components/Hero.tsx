@@ -20,6 +20,7 @@ import { getFounderPhoto, subscribeFounderPhoto } from '../services/founderPhoto
 import { getSuryaPhoto, subscribeSuryaPhoto } from '../services/suryaPhoto.ts';
 import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
 import { SURYA_PAL_PHOTO_DATA_URL } from '../data/suryaPalPhoto.ts';
+import { WebnovaLogo } from './WebnovaLogo.tsx';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -143,7 +144,8 @@ export const Hero: React.FC<HeroProps> = ({
               {/* Left Column: Brand & Leadership */}
               <div className="flex-1 space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <WebnovaLogo size="sm" variant="icon-only" />
                     <span className="text-2xl font-extrabold tracking-wider font-heading">
                       WEB<span className="text-blue-400">NOVA</span>
                     </span>
