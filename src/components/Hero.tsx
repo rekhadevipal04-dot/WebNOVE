@@ -16,10 +16,6 @@ import {
   Zap,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
-import { getFounderPhoto, subscribeFounderPhoto } from '../services/founderPhoto.ts';
-import { getSuryaPhoto, subscribeSuryaPhoto } from '../services/suryaPhoto.ts';
-import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
-import { SURYA_PAL_PHOTO_DATA_URL } from '../data/suryaPalPhoto.ts';
 import { WebnovaLogo } from './WebnovaLogo.tsx';
 
 interface HeroProps {
@@ -37,21 +33,6 @@ export const Hero: React.FC<HeroProps> = ({
   onNavigate,
   onOpenQR,
 }) => {
-  const [founderPhoto, setFounderPhoto] = useState<string>(() => getFounderPhoto());
-  const [suryaPhoto, setSuryaPhoto] = useState<string>(() => getSuryaPhoto());
-
-  useEffect(() => {
-    const unsubFounder = subscribeFounderPhoto((newPhoto) => {
-      setFounderPhoto(newPhoto);
-    });
-    const unsubSurya = subscribeSuryaPhoto((newPhoto) => {
-      setSuryaPhoto(newPhoto);
-    });
-    return () => {
-      unsubFounder();
-      unsubSurya();
-    };
-  }, []);
 
   return (
     <section id="hero" className="relative pt-6 pb-16 md:pt-12 md:pb-24 overflow-hidden">
@@ -160,68 +141,48 @@ export const Hero: React.FC<HeroProps> = ({
 
                 <div className="pt-2 border-t border-slate-800/80">
                   <p className="text-xs uppercase tracking-widest text-slate-400 font-medium mb-3">
-                    Leadership &amp; Direction
+                    Agency Core Strengths
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => onNavigate('founder-spotlight')}
-                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-400/40 text-left transition-all group cursor-pointer"
-                      title="View Anand Pal Founder & CEO Profile"
-                    >
-                      <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-slate-900 border border-blue-400/50 flex-shrink-0 shadow-md">
-                        <img
-                          src={founderPhoto || ANAND_PAL_PHOTO_DATA_URL}
-                          alt="Anand Pal - Founder & CEO"
-                          referrerPolicy="no-referrer"
-                          onError={(e) => {
-                            const target = e.currentTarget as HTMLImageElement;
-                            if (target.src !== ANAND_PAL_PHOTO_DATA_URL) {
-                              target.src = ANAND_PAL_PHOTO_DATA_URL;
-                            }
-                          }}
-                          className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                        />
-                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-900" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-400 flex-shrink-0">
+                        <Code2 className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white tracking-wide flex items-center gap-1 group-hover:text-blue-300 transition-colors">
-                          <span>ANAND PAL</span>
-                          <span className="text-[10px] text-blue-400">↗</span>
-                        </h4>
-                        <p className="text-[10px] font-semibold text-blue-400 uppercase">FOUNDER &amp; CEO</p>
+                        <h4 className="text-xs font-bold text-white tracking-wide">Full-Stack Tech</h4>
+                        <p className="text-[10px] text-slate-400">Next.js, React &amp; Cloud</p>
                       </div>
-                    </button>
+                    </div>
 
-                    <button
-                      type="button"
-                      onClick={() => onNavigate('founder-spotlight')}
-                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-sky-400/40 text-left transition-all group cursor-pointer"
-                      title="View Surya Pal Co-Founder & Director Profile"
-                    >
-                      <div className="relative w-9 h-9 rounded-xl overflow-hidden bg-slate-900 border border-sky-400/50 flex-shrink-0 shadow-md">
-                        <img
-                          src={suryaPhoto || SURYA_PAL_PHOTO_DATA_URL}
-                          alt="Surya Pal - Co-Founder & Director"
-                          referrerPolicy="no-referrer"
-                          onError={(e) => {
-                            const target = e.currentTarget as HTMLImageElement;
-                            if (target.src !== SURYA_PAL_PHOTO_DATA_URL) {
-                              target.src = SURYA_PAL_PHOTO_DATA_URL;
-                            }
-                          }}
-                          className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                        />
-                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-900" />
+                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400 flex-shrink-0">
+                        <TrendingUp className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white tracking-wide flex items-center gap-1 group-hover:text-sky-300 transition-colors">
-                          <span>SURYA PAL</span>
-                          <span className="text-[10px] text-sky-400">↗</span>
-                        </h4>
-                        <p className="text-[10px] font-semibold text-sky-400 uppercase">CO-FOUNDER &amp; DIRECTOR</p>
+                        <h4 className="text-xs font-bold text-white tracking-wide">Growth &amp; SEO</h4>
+                        <p className="text-[10px] text-slate-400">Data-Driven Campaigns</p>
                       </div>
-                    </button>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-white tracking-wide">99.9% SLA Uptime</h4>
+                        <p className="text-[10px] text-slate-400">Enterprise Security</p>
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-400 flex-shrink-0">
+                        <Users className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-white tracking-wide">Dedicated Support</h4>
+                        <p className="text-[10px] text-slate-400">24/7 Digital Team</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

@@ -7,7 +7,6 @@ import {
   X,
   KeyRound,
   AlertCircle,
-  CheckCircle2,
 } from 'lucide-react';
 
 interface AdminLoginModalProps {
@@ -71,11 +70,6 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
     }, 400);
   };
 
-  const handleQuickPin = (pin: string) => {
-    setPasscode(pin);
-    setError('');
-  };
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm animate-fade-in">
       <div
@@ -136,7 +130,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
                   setPasscode(e.target.value);
                   if (error) setError('');
                 }}
-                placeholder="Enter PIN (e.g. 9519 or admin123)"
+                placeholder="Enter administrative passcode or PIN"
                 autoFocus
                 className="w-full pl-10 pr-10 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm font-mono text-slate-900 dark:text-white transition-colors"
               />
@@ -150,32 +144,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
             </div>
             <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
               <span>Authorized agency staff only</span>
-              <span className="font-mono text-blue-600 dark:text-blue-400">PIN Hint: 9519 or admin123</span>
-            </div>
-          </div>
-
-          {/* Quick PIN Presets for One-Click Team Login */}
-          <div className="pt-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
-              Quick Admin Presets:
-            </span>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickPin('9519')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/40 border border-slate-200 dark:border-slate-700 hover:border-blue-400 text-left text-xs text-slate-700 dark:text-slate-300 transition-colors"
-              >
-                <span className="block font-bold text-[11px] text-blue-600 dark:text-blue-400">PIN: 9519</span>
-                <span className="text-[10px] text-slate-500">Agency Phone PIN</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickPin('admin123')}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/40 border border-slate-200 dark:border-slate-700 hover:border-blue-400 text-left text-xs text-slate-700 dark:text-slate-300 transition-colors"
-              >
-                <span className="block font-bold text-[11px] text-blue-600 dark:text-blue-400">PIN: admin123</span>
-                <span className="text-[10px] text-slate-500">Leadership Standard</span>
-              </button>
+              <span className="text-slate-400">Encrypted Entry</span>
             </div>
           </div>
 

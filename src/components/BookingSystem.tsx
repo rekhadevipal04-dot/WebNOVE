@@ -176,7 +176,7 @@ END:VCALENDAR`;
             Schedule an Initial Consultation
           </h2>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-            Select your preferred time slot to meet directly with Founders Anand Pal &amp; Suryapartap Pal. We discuss project feasibility, scope, and technical roadmap.
+            Select your preferred time slot to meet directly with our senior technical team &amp; digital consultants. We discuss project feasibility, scope, and technical roadmap.
           </p>
         </div>
 

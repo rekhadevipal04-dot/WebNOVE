@@ -14,7 +14,6 @@ import {
   BookOpen,
   Mail,
   ShieldCheck,
-  UserCheck,
 } from 'lucide-react';
 import { WebnovaLogo } from './WebnovaLogo.tsx';
 import { NotificationCenter } from './NotificationCenter.tsx';
@@ -73,7 +72,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const baseNavItems = [
     { id: 'services', label: 'Services', icon: Layers },
     { id: 'portfolio', label: 'Portfolio', icon: Briefcase },
-    { id: 'founder-spotlight', label: 'Leadership & Founders', icon: UserCheck },
     { id: 'customer-booking', label: 'Book Appointment', icon: Calendar },
     { id: 'portal', label: 'Client Vault', icon: Lock },
     { id: 'blog', label: 'Insights', icon: BookOpen },

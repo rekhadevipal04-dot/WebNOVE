@@ -7,8 +7,6 @@ import {
   AppNotification,
   AnalyticsData,
 } from '../types/index.ts';
-import { ANAND_PAL_PHOTO_DATA_URL } from './anandPalPhoto.ts';
-import { SURYA_PAL_PHOTO_DATA_URL } from './suryaPalPhoto.ts';
 
 export const COMPANY_INFO = {
   name: 'WEBNOVA',
@@ -28,26 +26,6 @@ export const COMPANY_INFO = {
   whatsappUrl: 'https://wa.me/919519832055?text=Hello%20WEBNOVA%20team,%20I%20am%20interested%20in%20your%20services.',
   telUrl: 'tel:+919519832055',
   mailUrl: 'mailto:webnova88@gmail.com',
-  leadership: [
-    {
-      name: 'REKHA DEVI PAL',
-      role: 'SUPER ADMINISTRATOR & DISPATCH CONTROLLER',
-      bio: 'Authoritative administrator managing appointment dispatch, client verification, and executive business operations.',
-      initials: 'RP',
-    },
-    {
-      name: 'ANAND PAL',
-      role: 'FOUNDER & CEO',
-      bio: 'Leading strategic direction, digital growth architectures, and enterprise client partnerships at WEBNOVA.',
-      initials: 'AP',
-    },
-    {
-      name: 'SURYAPARTAP PAL',
-      role: 'CO-FOUNDER & DIRECTOR',
-      bio: 'Directing full-stack web engineering, high-uptime cloud infrastructure, and technical execution.',
-      initials: 'SP',
-    },
-  ],
 };
 
 export const SERVICES_DATA: ServiceItem[] = [
@@ -349,9 +327,9 @@ At **WEBNOVA**, our engineers craft lean, serverless-ready architectures utilizi
 - Offload non-critical trackers into deferred web workers.
     `,
     author: {
-      name: 'Anand Pal',
-      role: 'Founder & CEO',
-      avatar: ANAND_PAL_PHOTO_DATA_URL,
+      name: 'Tech Engineering Team',
+      role: 'Web Architecture Specialist',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
     },
     publishedAt: 'Sep 4, 2026',
     readTime: '4 min read',
@@ -382,9 +360,9 @@ Brings open rates above 94% compared to traditional email's 18%.
 Prominently display verified customer reviews with photos, clear return policies, and transparent COD verification.
     `,
     author: {
-      name: 'Surya Pal',
-      role: 'Co-Founder & Director',
-      avatar: SURYA_PAL_PHOTO_DATA_URL,
+      name: 'Digital Growth Desk',
+      role: 'E-Commerce Specialist',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
     },
     publishedAt: 'Aug 28, 2026',
     readTime: '6 min read',
@@ -413,9 +391,9 @@ Our continuous maintenance programs provide:
 - Routine speed auditing and script minification
     `,
     author: {
-      name: 'Surya Pal',
-      role: 'Co-Founder & Director',
-      avatar: SURYA_PAL_PHOTO_DATA_URL,
+      name: 'Cloud & DevOps Team',
+      role: 'Infrastructure Lead',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
     },
     publishedAt: 'Aug 15, 2026',
     readTime: '5 min read',
@@ -438,9 +416,9 @@ For retail outlets, clinics, luxury real estate, and professional consultancies 
 - Dynamic review generation sequences sent to delighted customers within 2 hours of service delivery.
     `,
     author: {
-      name: 'Anand Pal',
-      role: 'Founder & CEO',
-      avatar: ANAND_PAL_PHOTO_DATA_URL,
+      name: 'Organic Search Strategist',
+      role: 'Senior SEO Consultant',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
     },
     publishedAt: 'Jul 29, 2026',
     readTime: '4 min read',

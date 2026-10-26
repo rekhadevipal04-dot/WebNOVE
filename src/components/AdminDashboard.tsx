@@ -32,16 +32,6 @@ import {
 import { BookingRecord, updateBookingStatusInDb } from '../services/bookingDb.ts';
 import { getAdminUpdateWhatsAppUrl } from '../services/whatsappService.ts';
 import {
-  getFounderPhoto,
-  subscribeFounderPhoto,
-} from '../services/founderPhoto.ts';
-import {
-  getSuryaPhoto,
-  subscribeSuryaPhoto,
-} from '../services/suryaPhoto.ts';
-import { ANAND_PAL_PHOTO_DATA_URL } from '../data/anandPalPhoto.ts';
-import { SURYA_PAL_PHOTO_DATA_URL } from '../data/suryaPalPhoto.ts';
-import {
   ChatInquiry,
   getStoredChatInquiries,
   updateChatInquiryStatus,
@@ -105,25 +95,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [copiedDashboardReport, setCopiedDashboardReport] = useState(false);
   const [copiedSingleReport, setCopiedSingleReport] = useState(false);
   const [isAdminUnlocked, setIsAdminUnlocked] = useState(true);
-
-  // Founder & Leadership Portrait State (Permanent)
-  const [founderPhoto, setFounderPhoto] = useState<string>(() => getFounderPhoto());
-  const [suryaPhoto, setSuryaPhoto] = useState<string>(() => getSuryaPhoto());
-
-  React.useEffect(() => {
-    const unsubFounder = subscribeFounderPhoto((newUrl) => {
-      setFounderPhoto(newUrl);
-    });
-
-    const unsubSurya = subscribeSuryaPhoto((newUrl) => {
-      setSuryaPhoto(newUrl);
-    });
-
-    return () => {
-      unsubFounder();
-      unsubSurya();
-    };
-  }, []);
 
   // Live Chat & WhatsApp Inquiries State
   const [activeAdminView, setActiveAdminView] = useState<'bookings' | 'chat_desk'>('bookings');
@@ -435,97 +406,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <Mail className="w-3.5 h-3.5" />
               <span>Email Full Dashboard Info to Admin</span>
             </button>
-          </div>
-        </div>
-
-        {/* Founders Executive Identity & Photo Management Card */}
-        <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 text-white border border-slate-800 shadow-md space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-            <span className="text-xs font-mono uppercase tracking-widest text-slate-400 font-bold flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-              <span>Founders &amp; Executive Leadership Media Desk</span>
-            </span>
-            <a
-              href="#founder-spotlight"
-              className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 flex items-center gap-1 transition-colors"
-            >
-              <span>View Public Section</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Anand Pal (Founder & CEO) */}
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border-2 border-blue-500/60 shadow-md flex-shrink-0">
-                  <img
-                    src={founderPhoto}
-                    alt="Anand Pal - Founder & CEO"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute bottom-0.5 right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-slate-900" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs font-extrabold text-white tracking-wide">ANAND PAL</span>
-                    <span className="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30 text-[9px] font-bold uppercase">
-                      CEO
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    Founder &amp; Chief Executive Officer
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Official Profile Active</span>
-                </span>
-              </div>
-            </div>
-
-            {/* Surya Pal (Co-Founder & Director) */}
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border-2 border-sky-500/60 shadow-md flex-shrink-0">
-                  <img
-                    src={suryaPhoto || SURYA_PAL_PHOTO_DATA_URL}
-                    alt="Surya Pal - Co-Founder & Director"
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      const target = e.currentTarget as HTMLImageElement;
-                      if (target.src !== SURYA_PAL_PHOTO_DATA_URL) {
-                        target.src = SURYA_PAL_PHOTO_DATA_URL;
-                      }
-                    }}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute bottom-0.5 right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-slate-900" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs font-extrabold text-white tracking-wide">SURYA PAL</span>
-                    <span className="px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30 text-[9px] font-bold uppercase">
-                      CO-FOUNDER
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-400">
-                    Co-Founder &amp; Executive Director
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Official Profile Active</span>
-                </span>
-              </div>
-            </div>
           </div>
         </div>
 

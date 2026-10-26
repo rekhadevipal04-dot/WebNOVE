@@ -70,7 +70,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 Start Your Digital Transformation
               </h2>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                Reach out directly to WEBNOVA. Whether you need a brand-new e-commerce store, a responsive corporate redesign, or continuous 24/7 maintenance, our founders and engineers are ready.
+                Reach out directly to WEBNOVA. Whether you need a brand-new e-commerce store, a responsive corporate redesign, or continuous 24/7 maintenance, our digital specialists and engineers are ready.
               </p>
             </div>
 

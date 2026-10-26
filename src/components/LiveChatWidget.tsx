@@ -76,7 +76,7 @@ export const LiveChatWidget: React.FC<LiveChatWidgetProps> = ({
     'What is your delivery turnaround?',
     'How much does an E-Commerce site cost?',
     'Do you provide 24/7 maintenance?',
-    'Connect directly with Founders on WhatsApp',
+    'Connect directly on WhatsApp',
     'Book an initial consultation',
   ];
 
@@ -132,9 +132,9 @@ export const LiveChatWidget: React.FC<LiveChatWidgetProps> = ({
         showWhatsAppAction: true,
       };
     }
-    if (input.includes('founder') || input.includes('anand') || input.includes('surya') || input.includes('call') || input.includes('phone') || input.includes('whatsapp')) {
+    if (input.includes('team') || input.includes('call') || input.includes('phone') || input.includes('whatsapp') || input.includes('contact')) {
       return {
-        reply: `Our founders are available directly! Anand Pal (Founder & CEO) & Surya Pal (Co-Founder & Director) monitor this desk and are reachable via WhatsApp or Call at ${WHATSAPP_DESK_DISPLAY}.`,
+        reply: `Our agency technical and strategy team is available directly! We monitor this desk 24/7 and are reachable via WhatsApp or Call at ${WHATSAPP_DESK_DISPLAY}.`,
         showWhatsAppAction: true,
       };
     }
@@ -152,7 +152,7 @@ export const LiveChatWidget: React.FC<LiveChatWidgetProps> = ({
     }
 
     return {
-      reply: `Thank you! Your message has been sent directly to our Executive WhatsApp Desk (${WHATSAPP_DESK_DISPLAY}). Founder Anand Pal and our technical team in Mumbai are reviewing your inquiry.`,
+      reply: `Thank you! Your message has been sent directly to our Executive WhatsApp Desk (${WHATSAPP_DESK_DISPLAY}). Our technical engineering team in Mumbai is reviewing your inquiry.`,
       showWhatsAppAction: true,
     };
   };
