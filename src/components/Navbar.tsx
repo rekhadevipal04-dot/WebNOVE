@@ -37,6 +37,7 @@ interface NavbarProps {
   onMarkNotificationAsRead: (id: string) => void;
   onMarkAllNotificationsAsRead: () => void;
   onClearNotification: (id: string) => void;
+  onOpenGooglePreview?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -56,6 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onMarkNotificationAsRead,
   onMarkAllNotificationsAsRead,
   onClearNotification,
+  onOpenGooglePreview,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -146,11 +148,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Logo */}
-          <div
-            onClick={() => handleNavClick('hero')}
-            className="cursor-pointer flex items-center"
-          >
-            <WebnovaLogo size="md" showTagline={true} />
+          <div className="flex items-center">
+            <div onClick={() => handleNavClick('hero')} className="cursor-pointer">
+              <WebnovaLogo
+                size="md"
+                showTagline={true}
+                showGoogleBadge={true}
+                onGooglePreviewClick={onOpenGooglePreview}
+              />
+            </div>
           </div>
 
           {/* Desktop Nav Items */}
@@ -223,6 +229,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="hidden xl:inline text-[11px]">Dark</span>
               </button>
             </div>
+
+            {/* Google Search SERP Preview Button */}
+            {onOpenGooglePreview && (
+              <button
+                type="button"
+                onClick={onOpenGooglePreview}
+                className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 transition-colors shadow-xs cursor-pointer"
+                title="View WEBNOVA on Google Search & SERP snippet"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
+                </svg>
+                <span>Google Search</span>
+              </button>
+            )}
 
             {/* Client Portal Button / User Avatar */}
             {currentUser ? (
@@ -446,6 +467,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="w-full py-2 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-medium flex items-center justify-center gap-2"
               >
                 <span>Signed in as {currentUser.name} (Client Portal)</span>
+              </button>
+            )}
+
+            {onOpenGooglePreview && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenGooglePreview();
+                }}
+                className="w-full py-2 px-4 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-blue-700 dark:text-sky-300 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
+                </svg>
+                <span>Google Search &amp; Logo Preview</span>
               </button>
             )}
 

@@ -1,90 +1,149 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Crisp Radiant Light Background -->
-    <linearGradient id="favBg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="60%" stop-color="#F8FAFC" />
-      <stop offset="100%" stop-color="#E0F2FE" />
+    <!-- Deep Cosmic Sapphire Foundation -->
+    <linearGradient id="wnDarkBg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B132B" />
+      <stop offset="50%" stop-color="#0E1E38" />
+      <stop offset="100%" stop-color="#060B18" />
     </linearGradient>
 
-    <!-- Vibrant Tech Cyan-to-Blue Border -->
-    <linearGradient id="favBorder" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+    <!-- Luminous Neon Cyan-to-Blue Border -->
+    <linearGradient id="wnNeonBorder" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#38BDF8" />
-      <stop offset="50%" stop-color="#2563EB" />
-      <stop offset="100%" stop-color="#0284C7" />
-    </linearGradient>
-
-    <!-- Orbit Swoosh Gradient -->
-    <linearGradient id="favOrbit" x1="10" y1="80" x2="90" y2="20" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0284C7" />
-      <stop offset="50%" stop-color="#38BDF8" />
-      <stop offset="100%" stop-color="#60A5FA" />
-    </linearGradient>
-
-    <!-- 'W' Main Stem: Deep Royal Blue to Vivid Blue -->
-    <linearGradient id="favW1" x1="20" y1="25" x2="50" y2="80" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#1E40AF" />
-      <stop offset="40%" stop-color="#1D4ED8" />
+      <stop offset="50%" stop-color="#60A5FA" />
       <stop offset="100%" stop-color="#2563EB" />
     </linearGradient>
 
-    <!-- 'W' Accent Stem: Vivid Blue to Electric Cyan -->
-    <linearGradient id="favW2" x1="50" y1="25" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#2563EB" />
-      <stop offset="50%" stop-color="#0284C7" />
-      <stop offset="100%" stop-color="#06B6D4" />
+    <!-- Radiant Cosmic Orbital Swoosh -->
+    <linearGradient id="wnOrbitGlow" x1="12" y1="78" x2="88" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.8" />
+      <stop offset="40%" stop-color="#38BDF8" />
+      <stop offset="80%" stop-color="#7DD3FC" />
+      <stop offset="100%" stop-color="#BAE6FD" />
     </linearGradient>
+
+    <!-- Luminous High-Light W Stem 1 (Left) -->
+    <linearGradient id="wnWStem1" x1="18" y1="26" x2="48" y2="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#E0F2FE" />
+      <stop offset="70%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <!-- Luminous High-Light W Stem 2 (Right) -->
+    <linearGradient id="wnWStem2" x1="48" y1="26" x2="82" y2="76" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="45%" stop-color="#60A5FA" />
+      <stop offset="85%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Radial Glow for 3D Depth -->
+    <radialGradient id="wnGlassReflect" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.4" />
+      <stop offset="60%" stop-color="#0284C7" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Nova Star Glow -->
+    <radialGradient id="wnStarAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.95" />
+      <stop offset="40%" stop-color="#0284C7" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0" />
+    </radialGradient>
   </defs>
 
-  <!-- Luminous White Squircle Badge -->
-  <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#favBg)" stroke="url(#favBorder)" stroke-width="3" />
+  <!-- Base Squircle Container -->
+  <rect
+    x="3.5"
+    y="3.5"
+    width="93"
+    height="93"
+    rx="24"
+    fill="url(#wnDarkBg)"
+    stroke="url(#wnNeonBorder)"
+    stroke-width="3.2"
+  />
 
-  <!-- Subtle High-Gloss Inner Glass Ring -->
-  <rect x="6.5" y="6.5" width="87" height="87" rx="21.5" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
+  <!-- Gloss Lighting Reflection -->
+  <rect
+    x="5"
+    y="5"
+    width="90"
+    height="90"
+    rx="22"
+    fill="url(#wnGlassReflect)"
+  />
 
-  <!-- Planetary Orbit Arc -->
+  <!-- Inner Soft Bevel -->
+  <rect
+    x="6.5"
+    y="6.5"
+    width="87"
+    height="87"
+    rx="20.5"
+    fill="none"
+    stroke="#38BDF8"
+    stroke-width="1"
+    stroke-opacity="0.4"
+  />
+
+  <!-- Dynamic Celestial Orbit Ring -->
   <path
-    d="M 14 62 C 14 78, 50 86, 76 74 C 88 68, 92 56, 88 44 C 84 32, 70 24, 54 22"
-    stroke="url(#favOrbit)"
-    stroke-width="4"
+    d="M 12 65 C 10 79, 44 87, 72 76 C 88 70, 93 56, 88 42 C 84 28, 68 20, 50 19"
+    stroke="url(#wnOrbitGlow)"
+    stroke-width="4.5"
     stroke-linecap="round"
     fill="none"
   />
 
-  <!-- Bold Modern Geometric 'W' -->
+  <!-- Iconic 'W' - Left Wing with Brilliant Light -->
   <path
-    d="M 22 28 L 36 74 L 50 38 L 64 74 L 78 28"
-    stroke="url(#favW1)"
+    d="M 21 28 L 35 74 L 50 38 L 65 74 L 79 28"
+    stroke="url(#wnWStem1)"
     stroke-width="9"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
   />
 
-  <!-- Dynamic Gradient Accent on Right Wing -->
+  <!-- Dynamic Right Wing Overlay -->
   <path
-    d="M 50 38 L 64 74 L 78 28"
-    stroke="url(#favW2)"
+    d="M 50 38 L 65 74 L 79 28"
+    stroke="url(#wnWStem2)"
     stroke-width="9"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"
   />
 
-  <!-- Starburst Glow Aura -->
-  <circle cx="80" cy="20" r="9" fill="#38BDF8" fill-opacity="0.35" />
+  <!-- Center Core Highlight Line -->
+  <path
+    d="M 35 74 L 50 38 L 65 74"
+    stroke="#FFFFFF"
+    stroke-width="2.5"
+    stroke-opacity="0.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- Glowing Nova Star Apex Aura (Top Right Orbit) -->
+  <circle cx="78" cy="22" r="11" fill="url(#wnStarAura)" />
 
   <!-- 4-Point Nova Starburst (Symbol of WEBNOVA) -->
   <path
-    d="M 80 11 Q 80 20, 71 20 Q 80 20, 80 29 Q 80 20, 89 20 Q 80 20, 80 11 Z"
-    fill="#0284C7"
-  />
-  <path
-    d="M 80 14 Q 80 20, 74 20 Q 80 20, 80 26 Q 80 20, 86 20 Q 80 20, 80 14 Z"
+    d="M 78 12 Q 78 22, 68 22 Q 78 22, 78 32 Q 78 22, 88 22 Q 78 22, 78 12 Z"
     fill="#38BDF8"
   />
-  <circle cx="80" cy="20" r="1.5" fill="#FFFFFF" />
+  <path
+    d="M 78 15 Q 78 22, 71 22 Q 78 22, 78 29 Q 78 22, 85 22 Q 78 22, 78 15 Z"
+    fill="#FFFFFF"
+  />
 
-  <!-- Orbit Particle Accent -->
-  <circle cx="17" cy="56" r="2" fill="#0284C7" />
+  <!-- Brilliant Nova Core Dot -->
+  <circle cx="78" cy="22" r="2.5" fill="#FFFFFF" />
+
+  <!-- Satellite Micro-Orbit Accent Dot -->
+  <circle cx="16" cy="58" r="2.5" fill="#38BDF8" />
 </svg>

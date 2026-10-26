@@ -26,6 +26,7 @@ import { ClientPortal } from './components/ClientPortal.tsx';
 import { LiveChatWidget } from './components/LiveChatWidget.tsx';
 import { QRCodeModal } from './components/QRCodeModal.tsx';
 import { AdminLoginModal } from './components/AdminLoginModal.tsx';
+import { GoogleSearchPreviewModal } from './components/GoogleSearchPreviewModal.tsx';
 import { ToastContainer, ToastMessage } from './components/Toast.tsx';
 import { Footer } from './components/Footer.tsx';
 import {
@@ -298,6 +299,7 @@ export default function App() {
 
   // 7. Modals State
   const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [googlePreviewOpen, setGooglePreviewOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
@@ -319,6 +321,7 @@ export default function App() {
         onMarkNotificationAsRead={handleMarkNotificationAsRead}
         onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}
         onClearNotification={handleClearNotification}
+        onOpenGooglePreview={() => setGooglePreviewOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -329,6 +332,7 @@ export default function App() {
           isAdmin={isAdminLoggedIn}
           onNavigate={handleNavigate}
           onOpenQR={() => setQrModalOpen(true)}
+          onOpenGooglePreview={() => setGooglePreviewOpen(true)}
         />
 
         {/* 1. Dedicated Customer Booking Form with Direct Database Persistence */}
@@ -418,6 +422,7 @@ export default function App() {
             setAdminLoginModalOpen(true);
           }
         }}
+        onOpenGooglePreview={() => setGooglePreviewOpen(true)}
       />
 
       {/* Real-Time Live Customer Support Chat Widget */}
@@ -438,6 +443,12 @@ export default function App() {
         onClose={() => setAdminLoginModalOpen(false)}
         onLoginSuccess={handleAdminLoginSuccess}
         onShowToast={addToast}
+      />
+
+      {/* Interactive Google Search SERP & Logo Preview Modal */}
+      <GoogleSearchPreviewModal
+        isOpen={googlePreviewOpen}
+        onClose={() => setGooglePreviewOpen(false)}
       />
 
       {/* Non-Disruptive Toast Container */}

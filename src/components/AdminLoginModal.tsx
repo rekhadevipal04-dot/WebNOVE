@@ -9,6 +9,8 @@ import {
   AlertCircle,
 } from 'lucide-react';
 
+import { WebnovaLogo } from './WebnovaLogo.tsx';
+
 interface AdminLoginModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -87,13 +89,11 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <ShieldCheck className="w-6 h-6 text-white" />
-            </div>
+            <WebnovaLogo size="sm" variant="icon-only" />
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-mono tracking-wider text-blue-400 uppercase font-semibold">
-                  Restricted Access
+                  Restricted Agency Portal
                 </span>
               </div>
               <h3 className="text-lg font-bold font-heading text-white">

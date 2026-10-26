@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, MessageCircle, Phone, Mail, Copy, Check, ExternalLink, ShieldCheck } from 'lucide-react';
 import { COMPANY_INFO } from '../data/webnovaData.ts';
+import { WebnovaLogo } from './WebnovaLogo.tsx';
 
 interface QRCodeModalProps {
   isOpen: boolean;
@@ -34,13 +35,16 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose }) => 
           <X className="w-5 h-5" />
         </button>
 
-        <div className="text-center mb-5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-2">
+        <div className="flex flex-col items-center text-center mb-5">
+          <div className="mb-2">
+            <WebnovaLogo size="md" variant="icon-only" />
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-sky-400 text-xs font-semibold mb-2">
             <ShieldCheck className="w-3.5 h-3.5" />
             Official Verified Card
           </div>
           <h3 className="text-xl font-bold text-slate-900 dark:text-white font-heading">
-            Let's Connect with WEBNOVA
+            Connect with WEBNOVA
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Scan with your phone camera or click direct actions below
