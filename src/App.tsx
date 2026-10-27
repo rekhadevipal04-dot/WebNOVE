@@ -22,11 +22,9 @@ import { ServicesSection } from './components/ServicesSection.tsx';
 import { PortfolioSection } from './components/PortfolioSection.tsx';
 import { BlogSection } from './components/BlogSection.tsx';
 import { ContactSection } from './components/ContactSection.tsx';
-import { ClientPortal } from './components/ClientPortal.tsx';
 import { LiveChatWidget } from './components/LiveChatWidget.tsx';
 import { QRCodeModal } from './components/QRCodeModal.tsx';
 import { AdminLoginModal } from './components/AdminLoginModal.tsx';
-import { GoogleSearchPreviewModal } from './components/GoogleSearchPreviewModal.tsx';
 import { ToastContainer, ToastMessage } from './components/Toast.tsx';
 import { Footer } from './components/Footer.tsx';
 import {
@@ -34,8 +32,6 @@ import {
   INITIAL_NOTIFICATIONS,
 } from './data/webnovaData.ts';
 import {
-  ClientUser,
-  ConsultationBooking,
   AppNotification,
 } from './types/index.ts';
 import {
@@ -151,9 +147,8 @@ export default function App() {
         localStorage.removeItem('webnova_bookings');
       }
       const cachedUser = localStorage.getItem('webnova_user');
-      if (cachedUser && (cachedUser.toLowerCase().includes('rahul') || cachedUser.toLowerCase().includes('mehta'))) {
+      if (cachedUser) {
         localStorage.removeItem('webnova_user');
-        setCurrentUser(null);
       }
     } catch {
       // ignore
@@ -176,96 +171,7 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  // 3. User Authentication State
-  const [currentUser, setCurrentUser] = useState<ClientUser | null>(() => {
-    if (typeof window !== 'undefined') {
-      const savedUser = localStorage.getItem('webnova_user');
-      if (savedUser) {
-        try {
-          const parsed = JSON.parse(savedUser);
-          if (
-            parsed?.name?.toLowerCase().includes('rahul') ||
-            parsed?.name?.toLowerCase().includes('mehta') ||
-            parsed?.email?.toLowerCase().includes('rahul') ||
-            parsed?.email?.toLowerCase().includes('mehta')
-          ) {
-            localStorage.removeItem('webnova_user');
-            return null;
-          }
-          return parsed;
-        } catch {
-          return null;
-        }
-      }
-    }
-    return null;
-  });
-
-  const handleLogin = (user: ClientUser) => {
-    setCurrentUser(user);
-    localStorage.setItem('webnova_user', JSON.stringify(user));
-  };
-
-  const handleLogout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('webnova_user');
-    addToast('info', 'Session Terminated', 'You have been logged out of the client portal.');
-  };
-
-  // 4. Consultation Bookings State (Clean, real entries only)
-  const [bookings, setBookings] = useState<ConsultationBooking[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('webnova_bookings');
-      if (saved) {
-        try {
-          const parsed: ConsultationBooking[] = JSON.parse(saved);
-          return parsed.filter(
-            (b) =>
-              !b.clientName?.toLowerCase().includes('rahul') &&
-              !b.clientName?.toLowerCase().includes('mehta') &&
-              !b.id.startsWith('mock-')
-          );
-        } catch {
-          return [];
-        }
-      }
-    }
-    return [];
-  });
-
-  const [prefilledService, setPrefilledService] = useState('');
-
-  const handleBookingSuccess = (newBooking: ConsultationBooking) => {
-    const updated = [newBooking, ...bookings];
-    setBookings(updated);
-    localStorage.setItem('webnova_bookings', JSON.stringify(updated));
-
-    // Also dispatch an automated in-app notification
-    const newNotif: AppNotification = {
-      id: `notif-${Date.now()}`,
-      title: 'Consultation Confirmed',
-      message: `Meeting booked for ${newBooking.serviceType} on ${newBooking.date} at ${newBooking.timeSlot}.`,
-      type: 'success',
-      timestamp: 'Just now',
-      read: false,
-      actionLabel: 'View in Vault',
-      actionUrl: '#portal',
-    };
-    setNotifications((prev) => [newNotif, ...prev]);
-
-    addToast(
-      'success',
-      'Consultation Scheduled!',
-      `Meeting link generated: ${newBooking.meetingLink}`
-    );
-  };
-
-  const handleSelectServiceForBooking = (serviceTitle: string) => {
-    setPrefilledService(serviceTitle);
-    handleNavigate('booking');
-  };
-
-  // 5. Notifications State
+  // 4. Notifications State
   const [notifications, setNotifications] = useState<AppNotification[]>(INITIAL_NOTIFICATIONS);
 
   const handleMarkNotificationAsRead = (id: string) => {
@@ -299,7 +205,6 @@ export default function App() {
 
   // 7. Modals State
   const [qrModalOpen, setQrModalOpen] = useState(false);
-  const [googlePreviewOpen, setGooglePreviewOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
@@ -315,13 +220,10 @@ export default function App() {
         isAdminLoggedIn={isAdminLoggedIn}
         onOpenAdminLogin={() => setAdminLoginModalOpen(true)}
         onAdminLogout={handleAdminLogout}
-        currentUser={currentUser}
-        onOpenAuth={() => handleNavigate('portal')}
         notifications={notifications}
         onMarkNotificationAsRead={handleMarkNotificationAsRead}
         onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}
         onClearNotification={handleClearNotification}
-        onOpenGooglePreview={() => setGooglePreviewOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -332,7 +234,6 @@ export default function App() {
           isAdmin={isAdminLoggedIn}
           onNavigate={handleNavigate}
           onOpenQR={() => setQrModalOpen(true)}
-          onOpenGooglePreview={() => setGooglePreviewOpen(true)}
         />
 
         {/* 1. Dedicated Customer Booking Form with Direct Database Persistence */}
@@ -394,15 +295,6 @@ export default function App() {
           onOpenBooking={() => handleNavigate('customer-booking')}
         />
 
-        <ClientPortal
-          currentUser={currentUser}
-          onLogin={handleLogin}
-          onLogout={handleLogout}
-          bookings={bookings}
-          onOpenBooking={() => handleNavigate('customer-booking')}
-          onShowToast={addToast}
-        />
-
         <BlogSection />
 
         <ContactSection
@@ -422,7 +314,6 @@ export default function App() {
             setAdminLoginModalOpen(true);
           }
         }}
-        onOpenGooglePreview={() => setGooglePreviewOpen(true)}
       />
 
       {/* Real-Time Live Customer Support Chat Widget */}
@@ -445,12 +336,6 @@ export default function App() {
         onShowToast={addToast}
       />
 
-      {/* Interactive Google Search SERP & Logo Preview Modal */}
-      <GoogleSearchPreviewModal
-        isOpen={googlePreviewOpen}
-        onClose={() => setGooglePreviewOpen(false)}
-      />
-
       {/* Non-Disruptive Toast Container */}
       <ToastContainer
         toasts={toasts}
@@ -458,7 +343,7 @@ export default function App() {
       />
 
       {/* Mobile Sticky Quick-Action Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 py-2 px-3 flex items-center justify-around text-[10px] font-semibold">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 py-2.5 px-4 flex items-center justify-around text-[10px] font-semibold">
         <a
           href={COMPANY_INFO.whatsappUrl}
           target="_blank"
@@ -479,7 +364,7 @@ export default function App() {
 
         <button
           onClick={() => handleNavigate('customer-booking')}
-          className="flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl bg-blue-600 text-white font-bold"
+          className="flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl bg-blue-600 text-white font-bold shadow-xs"
         >
           <Calendar className="w-4 h-4" />
           <span>Book</span>
@@ -491,14 +376,6 @@ export default function App() {
         >
           <ShieldCheck className="w-4 h-4 text-blue-500" />
           <span>Admin</span>
-        </button>
-
-        <button
-          onClick={() => handleNavigate('portal')}
-          className="flex flex-col items-center gap-0.5 text-slate-700 dark:text-slate-300"
-        >
-          <Lock className="w-4 h-4" />
-          <span>Vault</span>
         </button>
 
         <button

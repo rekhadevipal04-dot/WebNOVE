@@ -24,7 +24,6 @@ interface HeroProps {
   isAdmin?: boolean;
   onNavigate: (sectionId: string) => void;
   onOpenQR: () => void;
-  onOpenGooglePreview?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
@@ -33,7 +32,6 @@ export const Hero: React.FC<HeroProps> = ({
   isAdmin = false,
   onNavigate,
   onOpenQR,
-  onOpenGooglePreview,
 }) => {
 
   return (
@@ -57,18 +55,6 @@ export const Hero: React.FC<HeroProps> = ({
             <QrCode className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             <span>Digital Business Card</span>
           </button>
-
-          {onOpenGooglePreview && (
-            <button
-              onClick={onOpenGooglePreview}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-700 dark:text-emerald-300 text-xs font-semibold transition-colors cursor-pointer shadow-xs"
-            >
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
-              </svg>
-              <span>Google Search &amp; Logo Preview</span>
-            </button>
-          )}
         </div>
 
         {/* Main Headline */}

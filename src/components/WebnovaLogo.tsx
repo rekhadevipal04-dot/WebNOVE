@@ -5,8 +5,6 @@ interface LogoProps {
   showTagline?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   variant?: 'full' | 'icon-only' | 'stacked';
-  showGoogleBadge?: boolean;
-  onGooglePreviewClick?: () => void;
 }
 
 export const WebnovaLogo: React.FC<LogoProps> = ({
@@ -14,8 +12,6 @@ export const WebnovaLogo: React.FC<LogoProps> = ({
   showTagline = false,
   size = 'md',
   variant = 'full',
-  showGoogleBadge = false,
-  onGooglePreviewClick,
 }) => {
   const iconSizes = {
     xs: 'w-6 h-6',
@@ -219,20 +215,8 @@ export const WebnovaLogo: React.FC<LogoProps> = ({
           </span>
           {showTagline && (
             <span className="text-xs font-semibold tracking-wider uppercase text-slate-500 dark:text-slate-400 mt-1">
-              Digital Marketing &amp; Web Agency
+              Digital Agency &amp; Web Studio
             </span>
-          )}
-          {showGoogleBadge && (
-            <button
-              onClick={onGooglePreviewClick}
-              type="button"
-              className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 dark:text-sky-300 dark:bg-sky-950/60 dark:hover:bg-sky-900/60 rounded-full border border-blue-200 dark:border-sky-800 transition-colors"
-            >
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
-              </svg>
-              <span>Google Search Preview</span>
-            </button>
           )}
         </div>
       </div>
@@ -248,19 +232,6 @@ export const WebnovaLogo: React.FC<LogoProps> = ({
           <span className={`font-extrabold tracking-tight ${textSizes[size]} text-slate-900 dark:text-white font-heading`}>
             WEB<span className="text-blue-600 dark:text-sky-400">NOVA</span>
           </span>
-
-          {showGoogleBadge && (
-            <button
-              onClick={onGooglePreviewClick}
-              type="button"
-              title="Click to view Google Search SERP Preview"
-              aria-label="View Google Search preview"
-              className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 dark:text-emerald-300 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 rounded-full border border-emerald-200 dark:border-emerald-800 transition-colors"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Google Verified
-            </button>
-          )}
         </div>
 
         {showTagline && (
